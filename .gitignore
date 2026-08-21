@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+htmlcov/
+.coverage
+.coverage.*
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Data — tracked by shape, not by content
+data/raw/*
+data/interim/*
+data/processed/*
+!data/**/.gitkeep
+
+# Outputs
+outputs/
+figures/
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
