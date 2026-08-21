@@ -13,6 +13,37 @@ different mechanisms, not four variations of the same decoder stack.
 | **Gemma 4 E4B** (Google) | 2 Apr 2026 | 8B total / 4.5B effective | MatFormer nesting + Per-Layer Embeddings | 128K |
 | **LFM2.5-8B-A1B** (Liquid AI) | 28 May 2026 | 8.3B total / 1.5B active | Sparse MoE on the LFM2 conv-hybrid backbone | 128K |
 
+## All four are autoregressive — verified
+
+Confirmed against vendor documentation, not assumed:
+
+| Model | Decoder-only, next-token AR? | Source of the claim |
+|---|---|---|
+| Falcon-H1R 7B | Yes | described as a decoder-only LLM; Mamba-2 layers are causal recurrences |
+| Qwen3.5-9B | Yes | conventional dense causal decoder |
+| Gemma 4 E4B | Yes | "Gemma 4 models follow a decoder-only Transformer architecture" |
+| LFM2.5-8B-A1B | Yes | "retains a decoder-only LFM2 backbone ... decoder-only autoregressive" |
+
+The distinction worth holding onto: **architecture family is orthogonal to the
+generation objective.** SSM layers, MoE routing, per-layer embeddings and short
+convolutions all change *how a token is computed*; none of them change the fact
+that tokens are produced one at a time, left to right, each conditioned on its
+predecessors. Every one of these is trained on next-token prediction.
+
+Two things that look like exceptions but are not:
+
+- **Gemma 4 ships a draft model for speculative decoding.** That is a decoding
+  optimisation — the draft proposes tokens the main model verifies — and the
+  output distribution is unchanged. Still autoregressive.
+- **Mamba/SSM layers are recurrent, not attentional.** Recurrence is if anything
+  *more* strictly sequential than attention. Still autoregressive.
+
+The genuine non-autoregressive alternative is a **diffusion language model**,
+which denoises a whole sequence in parallel over several passes rather than
+extending it token by token. None of the four are of that kind. If a non-AR
+comparison is ever wanted, that is the family to look in — and it would need
+sourcing separately, as none was surveyed here.
+
 ## Why each one is architecturally distinct
 
 **Falcon-H1R 7B** interleaves standard transformer attention layers with Mamba-2
