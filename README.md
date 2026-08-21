@@ -89,7 +89,18 @@ from research import models
 model, tok = models.load("gpt2")
 ```
 
-`models/` is gitignored. Put `HF_TOKEN` in `.env` for gated repos such as Gemma.
+This is **enforced**, not merely defaulted. Loading a model from anywhere
+else - including the pre-existing HF cache in your user profile on C: -
+raises `ExternalModelError`:
+
+```python
+models.load(profile_cache / 'models--Qwen--Qwen3-0.6B')
+# ExternalModelError: C:/Users/.../models--Qwen--Qwen3-0.6B is outside
+#                     D:/research/models
+```
+
+Re-download by repo id instead. `models/` is gitignored; put `HF_TOKEN` in
+`.env` for gated repos such as Gemma.
 
 ## Accessing weights and layers
 

@@ -58,9 +58,10 @@ Weights are fetched with `transformers` / `huggingface_hub` and land in
 `models/` at the project root (`D:/research/models`). Never in the default
 cache under the user profile on C:.
 
-This is enforced by `research/__init__.py`, which sets `HF_HUB_CACHE` to
-`research.paths.MODELS`. That works only if it runs before `huggingface_hub`
-is imported, which gives one hard rule:
+`research/__init__.py` **forces** `HF_HUB_CACHE` to `research.paths.MODELS`.
+Forced, not defaulted: a stray `HF_HUB_CACHE` in the ambient environment cannot
+redirect weights back outside the project. It works only if it runs before
+`huggingface_hub` is imported, which gives one hard rule:
 
 > **Import `research` before `transformers` or `huggingface_hub`.**
 
@@ -77,13 +78,18 @@ from research import models
 model, tok = models.load("gpt2")     # passes cache_dir explicitly as well
 ```
 
+- **Never load a model from outside `models/`.** This machine has a
+  pre-existing Hugging Face cache at `~/.cache/huggingface` holding ~12 GB of
+  weights. Those belong to other work and are off limits here — re-download by
+  repo id instead of pointing at them. `models.load()` enforces this and raises
+  `ExternalModelError`; do not work around it by calling `from_pretrained`
+  directly with an external path.
 - `models/` is gitignored. **Never commit weights.** Commit the model id and
   revision instead, so a result can be re-derived.
 - Record every model used in `docs/` — id, revision/commit, dtype, and date
   pulled. "gemma3:1b" is not a provenance record; `google/gemma-3-1b-it` at a
   pinned revision is.
 - Set `HF_TOKEN` in `.env` for gated repos and higher rate limits.
-- An existing `HF_HUB_CACHE` in the environment overrides the pin, by design.
 
 ## Writing PyTorch code
 - **There is no GPU.** Never write `.cuda()`, `.to("cuda")`, or

@@ -19,13 +19,62 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from .paths import MODELS
 
 
+class ExternalModelError(RuntimeError):
+    """Raised when a model would be read from outside the project's models/."""
+
+
+def assert_cache_is_local() -> None:
+    """Fail if huggingface_hub is not pointed at this project's models/.
+
+    This happens when ``transformers`` or ``huggingface_hub`` was imported
+    before ``research``: the cache location is read once at import time, so the
+    pin set in ``research/__init__.py`` arrives too late and downloads would
+    silently land in the profile cache on C:.
+    """
+    import huggingface_hub.constants as hub_constants
+
+    resolved = Path(hub_constants.HF_HUB_CACHE)
+    if resolved != MODELS:
+        raise ExternalModelError(
+            f"Hugging Face cache resolves to {resolved}, not {MODELS}. "
+            "Import `research` before `transformers` / `huggingface_hub` - "
+            "the cache location is read once, at import time."
+        )
+
+
+def assert_is_local(model_id: str | Path) -> None:
+    """Fail if a filesystem path points outside the project's models/.
+
+    A bare repo id (``'gpt2'``, ``'google/gemma-3-1b-it'``) is fine: it resolves
+    through the pinned cache. An absolute path to weights elsewhere on the
+    machine is not - this project keeps every model under ``models/``.
+    """
+    path = Path(model_id)
+    if not path.exists():
+        return  # a hub repo id, not a local path
+
+    resolved = path.resolve()
+    if resolved != MODELS and MODELS not in resolved.parents:
+        raise ExternalModelError(
+            f"{resolved} is outside {MODELS}. Models used by this project must "
+            "live under models/. Re-download the weights by repo id instead of "
+            "pointing at an external copy."
+        )
+
+
 def load(model_id: str, dtype: torch.dtype = torch.float32, **kwargs):
-    """Load a model and tokenizer onto the CPU.
+    """Load a model and tokenizer onto the CPU, from this project's models/.
 
     Defaults to float32: this machine has no GPU, and CPU float16 matmul is
     slower than float32, not faster. Use bfloat16 only to halve memory when a
     model would otherwise not fit.
+
+    Raises :class:`ExternalModelError` rather than reading weights from outside
+    ``models/`` - including the pre-existing profile cache on C:.
     """
+    assert_cache_is_local()
+    assert_is_local(model_id)
+
     tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir=MODELS)
     model = AutoModelForCausalLM.from_pretrained(
         model_id, dtype=dtype, cache_dir=MODELS, **kwargs

@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 import pytest
 import torch
 from torch import nn
@@ -139,3 +142,64 @@ def test_huggingface_hub_actually_resolves_to_project_models_dir():
     from research.paths import MODELS
 
     assert Path(hub_constants.HF_HUB_CACHE) == MODELS
+
+
+# --- every model must live under <project>/models -------------------------
+
+
+def test_assert_is_local_accepts_a_hub_repo_id():
+    models.assert_is_local("gpt2")           # not a path; resolves via the cache
+    models.assert_is_local("google/gemma-3-1b-it")
+
+
+def test_assert_is_local_accepts_a_path_inside_models():
+    from research.paths import MODELS
+
+    inside = MODELS / "models--gpt2"
+    inside.mkdir(parents=True, exist_ok=True)
+    models.assert_is_local(inside)
+
+
+def test_assert_is_local_rejects_a_path_outside_models(tmp_path):
+    external = tmp_path / "some-model"
+    external.mkdir()
+    with pytest.raises(models.ExternalModelError, match="outside"):
+        models.assert_is_local(external)
+
+
+def test_assert_is_local_rejects_the_profile_cache_on_c():
+    """The specific thing this guards: reusing weights from ~/.cache/huggingface."""
+    profile_cache = Path.home() / ".cache" / "huggingface" / "hub"
+    if not profile_cache.exists():
+        pytest.skip("no profile cache on this machine")
+    with pytest.raises(models.ExternalModelError):
+        models.assert_is_local(profile_cache)
+
+
+def test_assert_cache_is_local_passes_under_normal_import_order():
+    models.assert_cache_is_local()
+
+
+def test_assert_cache_is_local_detects_a_late_pin(monkeypatch):
+    """Simulates transformers being imported before research."""
+    import huggingface_hub.constants as hub_constants
+
+    elsewhere = str(Path.home() / ".cache" / "huggingface" / "hub")
+    monkeypatch.setattr(hub_constants, "HF_HUB_CACHE", elsewhere)
+    with pytest.raises(models.ExternalModelError, match="Import `research` before"):
+        models.assert_cache_is_local()
+
+
+def test_pin_overrides_an_ambient_env_var():
+    """The pin is forced, not a default - a stray env var must not win."""
+    import subprocess
+    import sys
+
+    from research.paths import MODELS
+
+    env = dict(os.environ, HF_HUB_CACHE="C:/somewhere/else")
+    out = subprocess.run(
+        [sys.executable, "-c", "import research, os; print(os.environ['HF_HUB_CACHE'])"],
+        capture_output=True, text=True, env=env, check=True,
+    )
+    assert out.stdout.strip() == str(MODELS)
