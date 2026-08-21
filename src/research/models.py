@@ -44,25 +44,48 @@ def layers(model, kind: type | None = None) -> list[tuple[str, torch.nn.Module]]
 
 
 def layer_table(model) -> list[dict]:
-    """One row per submodule: name, class, parameter count, output-ish shape.
+    """One row per parameterised submodule: name, class, parameter count, shapes.
+
+    Tied weights are counted once, against the module that owns them first.
+    GPT-2, for instance, ties ``lm_head.weight`` to ``transformer.wte.weight``;
+    counting both would report 163 M parameters for a 124 M model. Modules whose
+    parameters are all tied elsewhere get ``params=0`` and ``tied=True``, so
+    ``sum(row["params"])`` reconciles with ``sum(p.numel() for p in
+    model.parameters())``.
 
     Returns plain dicts so the caller can hand it to pandas or print it raw.
     """
     rows = []
+    seen: dict[int, str] = {}
+
     for name, module in model.named_modules():
         if not name:
             continue
-        own = sum(p.numel() for p in module.parameters(recurse=False))
-        if own == 0:
+
+        shapes = {}
+        own = 0
+        tied_to = None
+
+        for param_name, param in module.named_parameters(recurse=False):
+            shapes[param_name] = tuple(param.shape)
+            key = param.data_ptr()
+            if key in seen:
+                tied_to = seen[key]
+            else:
+                seen[key] = name
+                own += param.numel()
+
+        if not shapes:
             continue
+
         rows.append(
             {
                 "name": name,
                 "class": type(module).__name__,
                 "params": own,
-                "shapes": {
-                    pn: tuple(p.shape) for pn, p in module.named_parameters(recurse=False)
-                },
+                "tied": tied_to is not None,
+                "tied_to": tied_to,
+                "shapes": shapes,
             }
         )
     return rows

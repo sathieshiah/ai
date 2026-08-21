@@ -42,6 +42,35 @@ def test_layer_table_skips_paramless_modules(tiny):
     assert sum(r["params"] for r in rows) == sum(p.numel() for p in tiny.parameters())
 
 
+class TiedTiny(nn.Module):
+    """Weight tying, as GPT-2 does between lm_head and the token embedding."""
+
+    def __init__(self):
+        super().__init__()
+        self.embed = nn.Embedding(16, 8)
+        self.head = nn.Linear(8, 16, bias=False)
+        self.head.weight = self.embed.weight  # tied
+
+    def forward(self, x):
+        return self.head(self.embed(x))
+
+
+def test_layer_table_counts_tied_weights_once():
+    """Double-counting a tied embedding inflates gpt2 from 124M to 163M."""
+    model = TiedTiny()
+    rows = models.layer_table(model)
+    assert sum(r["params"] for r in rows) == sum(p.numel() for p in model.parameters())
+
+
+def test_layer_table_records_what_a_tied_weight_is_tied_to():
+    rows = {r["name"]: r for r in models.layer_table(TiedTiny())}
+    assert rows["embed"]["tied"] is False
+    assert rows["head"]["tied"] is True
+    assert rows["head"]["tied_to"] == "embed"
+    assert rows["head"]["params"] == 0
+    assert rows["head"]["shapes"]["weight"] == (16, 8)  # still reported
+
+
 def test_weight_returns_detached_tensor(tiny):
     w = models.weight(tiny, "head.weight")
     assert w.shape == (16, 8)

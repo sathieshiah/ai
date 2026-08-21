@@ -26,9 +26,32 @@ that lives in this repo.
 ## Code rules
 - Resolve paths through `research.paths` (`RAW`, `INTERIM`, `PROCESSED`, ...).
   Never hard-code relative paths — notebooks and scripts run from different cwds.
-- Logic that more than one notebook needs moves into `src/research/` and gets a
-  test. Notebooks are for narrative and charts, not for the implementation.
-- Notebooks are committed with outputs cleared unless a chart is the point.
+
+## Notebooks are the working surface
+**Do the coding in Jupyter.** Exploration, model probing, and analysis belong in
+`notebooks/`, with markdown cells explaining what is being tested and why. Start
+from `notebooks/_template.ipynb`; `notebooks/00-getting-started.ipynb` is the
+worked example of the whole workflow.
+
+```bash
+.venv/Scripts/python -m jupyterlab
+```
+
+- **Kernel must be `Python (research ARM64)`.** The machine also exposes a
+  `python3` kernel pointing at an emulated x64 interpreter with no PyTorch;
+  selecting it yields confusing `ModuleNotFoundError`s. If the kernel is
+  missing, re-register it:
+  `.venv/Scripts/python -m ipykernel install --user --name research --display-name "Python (research ARM64)"`
+- **First cell is always `import research`**, before `transformers` or
+  `huggingface_hub` — it pins the model cache to D:. See "Getting models".
+- **Name notebooks `NN-short-slug.ipynb`** so they sort in reading order.
+- **Logic a second notebook needs graduates to `src/research/`** and gets a
+  test. Copy-pasting a cell between notebooks is the signal to move it.
+- **Clear outputs before committing**, unless the output *is* the documentation
+  (`00-getting-started.ipynb` is the standing exception). Long-running cells
+  must say so in the markdown above them.
+- **A finding that lives only in a cell is not finished** — write it up in
+  `docs/` with the model id, revision, dtype and seed needed to reproduce it.
 
 ## Getting models — always with `transformers`, always onto D:
 Weights are fetched with `transformers` / `huggingface_hub` and land in
@@ -112,5 +135,7 @@ larger — it reads shapes and dtypes without materialising the weights.
 - Notebooks: `.venv/Scripts/python -m jupyterlab`
 
 ## Docs index
-`README.md` (layout + setup) · `docs/arm64-python-stack.md` (what installs on
-ARM64) · `docs/local-llm-on-snapdragon-x.md` (measured inference throughput).
+`README.md` (layout + setup) · `notebooks/00-getting-started.ipynb` (worked
+example of the whole workflow) · `notebooks/_template.ipynb` (start here for new
+work) · `docs/arm64-python-stack.md` (what installs on ARM64) ·
+`docs/local-llm-on-snapdragon-x.md` (measured inference throughput).

@@ -46,3 +46,10 @@ src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+# F401: `import research` is required for its side effect (it pins HF_HUB_CACHE),
+#       and the template deliberately imports the toolkit before it is used.
+# I001: import order in notebooks is semantically significant - `research` must
+#       come first, so isort's grouping must not reorder it.
+"notebooks/*.ipynb" = ["F401", "I001"]

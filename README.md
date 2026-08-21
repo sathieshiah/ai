@@ -35,6 +35,31 @@ py -3.13-arm64 -m venv .venv
 .venv/Scripts/python -m pip install -e ".[dev]"
 ```
 
+## Working in Jupyter
+
+Coding happens in notebooks. Launch JupyterLab from the project root:
+
+```bash
+.venv/Scripts/python -m jupyterlab
+```
+
+- **Select the `Python (research ARM64)` kernel.** The `python3` kernel on this
+  machine is an emulated x64 interpreter with no PyTorch — it will fail on
+  `import torch`.
+- `notebooks/00-getting-started.ipynb` walks the whole workflow end to end:
+  loading a model, listing layers, reading weights, capturing activations, and
+  inspecting models too large for RAM. Outputs are kept in that one, so it reads
+  as documentation without being run.
+- `notebooks/_template.ipynb` is the starting point for new work.
+- Every notebook opens with `import research` — before `transformers` — so the
+  model cache is pinned to D:.
+
+If the kernel is missing from the launcher, register it:
+
+```bash
+.venv/Scripts/python -m ipykernel install --user --name research --display-name "Python (research ARM64)"
+```
+
 ## Checks
 
 ```bash
