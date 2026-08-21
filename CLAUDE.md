@@ -30,6 +30,57 @@ that lives in this repo.
   test. Notebooks are for narrative and charts, not for the implementation.
 - Notebooks are committed with outputs cleared unless a chart is the point.
 
+## Getting models — always with `transformers`, always onto D:
+Weights are fetched with `transformers` / `huggingface_hub` and land in
+`models/` at the project root (`D:/research/models`). Never in the default
+cache under the user profile on C:.
+
+This is enforced by `research/__init__.py`, which sets `HF_HUB_CACHE` to
+`research.paths.MODELS`. That works only if it runs before `huggingface_hub`
+is imported, which gives one hard rule:
+
+> **Import `research` before `transformers` or `huggingface_hub`.**
+
+```python
+import research                      # pins the cache — must come first
+from transformers import AutoModelForCausalLM
+model = AutoModelForCausalLM.from_pretrained("gpt2")   # -> D:/research/models
+```
+
+Prefer the helper, which is correct regardless of import order:
+
+```python
+from research import models
+model, tok = models.load("gpt2")     # passes cache_dir explicitly as well
+```
+
+- `models/` is gitignored. **Never commit weights.** Commit the model id and
+  revision instead, so a result can be re-derived.
+- Record every model used in `docs/` — id, revision/commit, dtype, and date
+  pulled. "gemma3:1b" is not a provenance record; `google/gemma-3-1b-it` at a
+  pinned revision is.
+- Set `HF_TOKEN` in `.env` for gated repos and higher rate limits.
+- An existing `HF_HUB_CACHE` in the environment overrides the pin, by design.
+
+## Writing PyTorch code
+- **There is no GPU.** Never write `.cuda()`, `.to("cuda")`, or
+  `device_map="auto"`. There is no device to move to and these will fail or
+  silently no-op. Everything is CPU; do not add device-juggling abstractions.
+- **Default to `float32`.** CPU `float16` matmul is *slower* than `float32`,
+  not faster. Reach for `bfloat16` only to halve memory when a model would
+  otherwise not fit — and say so in a comment.
+- **Check the parameter count against the memory budget before loading.**
+  ~4 bytes/param at float32 caps a full load near 1–3 B parameters. For
+  anything larger use `models.raw_tensors()` / `models.read_tensor()`, which
+  read shapes and individual tensors without materialising the model.
+- **Wrap inference in `torch.no_grad()`.** Nothing here trains; building an
+  autograd graph wastes memory that is already the binding constraint.
+- **Capture activations with `models.capture()`**, not hand-rolled hooks — it
+  removes them on exit, including when the body raises. A leaked forward hook
+  silently corrupts every later forward pass in the session.
+- **Seed anything stochastic** (`torch.manual_seed`) and record the seed in the
+  result, or the finding is not reproducible.
+
 ## Platform constraints — read before adding a dependency
 This machine is **Snapdragon X / Windows ARM64, 16 GB unified RAM, CPU only**.
 Two rules follow, and both have already bitten:

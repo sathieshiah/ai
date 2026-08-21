@@ -45,6 +45,27 @@ py -3.13-arm64 -m venv .venv
 .venv/Scripts/python -m ruff check .
 ```
 
+## Where models are downloaded
+
+All weights land in `models/` at the project root (on D:), never in the default
+cache under your user profile on C:. `research/__init__.py` sets `HF_HUB_CACHE`
+to do this, which means **import `research` before `transformers`**:
+
+```python
+import research                      # pins the cache - must come first
+from transformers import AutoModelForCausalLM
+model = AutoModelForCausalLM.from_pretrained("gpt2")   # -> D:/research/models
+```
+
+Or skip the ordering concern entirely by using the helper:
+
+```python
+from research import models
+model, tok = models.load("gpt2")
+```
+
+`models/` is gitignored. Put `HF_TOKEN` in `.env` for gated repos such as Gemma.
+
 ## Accessing weights and layers
 
 ```python

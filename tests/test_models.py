@@ -90,3 +90,23 @@ def test_ollama_blob_and_gguf_roundtrip():
     assert blob.is_file()
     tensors = models.gguf_tensors(blob)
     assert any(t["name"] == "token_embd.weight" for t in tensors)
+
+
+def test_hf_cache_is_pinned_to_project_models_dir():
+    """Importing `research` must redirect HF downloads onto D:, not C:."""
+    import os
+
+    from research.paths import MODELS
+
+    assert os.environ["HF_HUB_CACHE"] == str(MODELS)
+
+
+def test_huggingface_hub_actually_resolves_to_project_models_dir():
+    """The pin is only real if huggingface_hub picked it up at import time."""
+    from pathlib import Path
+
+    import huggingface_hub.constants as hub_constants
+
+    from research.paths import MODELS
+
+    assert Path(hub_constants.HF_HUB_CACHE) == MODELS
