@@ -13,6 +13,8 @@ RAW = DATA / "raw"
 INTERIM = DATA / "interim"
 PROCESSED = DATA / "processed"
 
+MODELS = ROOT / "models"  # HF weight cache - large, gitignored
+
 NOTEBOOKS = ROOT / "notebooks"
 OUTPUTS = ROOT / "outputs"
 FIGURES = OUTPUTS / "figures"
@@ -20,5 +22,5 @@ FIGURES = OUTPUTS / "figures"
 
 def ensure_dirs() -> None:
     """Create the writable output directories if they do not exist yet."""
-    for path in (INTERIM, PROCESSED, OUTPUTS, FIGURES):
+    for path in (INTERIM, PROCESSED, OUTPUTS, FIGURES, MODELS):
         path.mkdir(parents=True, exist_ok=True)

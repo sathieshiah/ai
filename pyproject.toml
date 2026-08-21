@@ -1,12 +1,21 @@
 [project]
 name = "research"
 version = "0.1.0"
-description = "Research and data-analysis project"
-requires-python = ">=3.11"
+description = "Research on model weights, layers and activations"
+requires-python = ">=3.13,<3.14"
+# NOTE: torch is deliberately NOT listed here. PyPI ships no win_arm64 torch
+# wheel; it must come from the PyTorch index. See README "Setup".
 dependencies = [
-    "pandas",
     "numpy",
+    "pandas",
     "matplotlib",
+    "transformers",
+    "safetensors",
+    "tokenizers",
+    "huggingface_hub",
+    "accelerate",
+    "einops",
+    "gguf",
     "python-dotenv",
 ]
 
@@ -29,6 +38,7 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+markers = ["slow: downloads weights or reads large files"]
 
 [tool.ruff]
 line-length = 100

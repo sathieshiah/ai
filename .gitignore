@@ -38,3 +38,6 @@ figures/
 Thumbs.db
 .vscode/
 .idea/
+
+# Model weights (HF cache)
+models/
