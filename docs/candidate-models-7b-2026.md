@@ -1,0 +1,80 @@
+# Four ~7B open-weight models from 2026, with four different architectures
+
+Compiled 2026-08-21. Selected for **architectural diversity** rather than
+benchmark scores: the point is that comparing them exercises genuinely
+different mechanisms, not four variations of the same decoder stack.
+
+## The shortlist
+
+| Model | Released | Params | Architecture family | Context |
+|---|---|---|---|---|
+| **Falcon-H1R 7B** (TII) | 5 Jan 2026 | 7B dense | Hybrid: attention + Mamba-2 SSM interleaved | 256K |
+| **Qwen3.5-9B** (Alibaba) | 2 Mar 2026 | 9B dense | Dense transformer + GQA (the baseline) | 262K |
+| **Gemma 4 E4B** (Google) | 2 Apr 2026 | 8B total / 4.5B effective | MatFormer nesting + Per-Layer Embeddings | 128K |
+| **LFM2.5-8B-A1B** (Liquid AI) | 28 May 2026 | 8.3B total / 1.5B active | Sparse MoE on the LFM2 conv-hybrid backbone | 128K |
+
+## Why each one is architecturally distinct
+
+**Falcon-H1R 7B** interleaves standard transformer attention layers with Mamba-2
+state-space layers in one stack. The SSM layers carry a fixed-size recurrent
+state instead of a growing KV cache, which is what buys the 256K context. For
+weight-level work this is the interesting one: the parameter *shapes* in an SSM
+layer (state-transition, input/output projections, per-channel decay) have no
+analogue in an attention block.
+
+**Qwen3.5-9B** is the control. A conventional dense decoder with grouped-query
+attention and native vision. Include it precisely because it is ordinary — it is
+the reference every other measurement is read against.
+
+**Gemma 4 E4B** carries 8B total parameters but activates ~4.5B, and does so by a
+mechanism unlike MoE routing. Per-Layer Embeddings feed each decoder layer its
+own auxiliary embedding signal rather than relying only on the input embedding,
+and MatFormer trains nested sub-models inside one checkpoint. So "how many
+parameters does this model have" has three different defensible answers, which
+makes it a good stress test for any parameter-counting code.
+
+**LFM2.5-8B-A1B** is sparse MoE — 8.3B total, ~1.5B active per token — built on
+Liquid AI's LFM2 backbone rather than a plain transformer. Routing means the
+per-token compute and the parameter count diverge sharply, and expert weights
+are a distinct tensor layout from dense FFN weights.
+
+## Feasibility on this machine
+
+Established earlier: 16 GB unified RAM, CPU only. That splits cleanly.
+
+| Task | Feasible? |
+|---|---|
+| `raw_tensors()` / `read_tensor()` — shapes, dtypes, per-tensor stats | **Yes, all four.** Nothing is materialised, so size does not matter. |
+| Quantised inference via Ollama (Q4, ~5 GB) | **Yes**, where a GGUF exists — expect ~5 tok/s. |
+| Full `torch` load for activations / hooks | **No.** 7B at float32 is 28 GB; bfloat16 is ~14 GB against 15.61 GB total. |
+
+So these four are usable for **weight-level** research immediately, and for
+activation-level work only via their smaller siblings (Qwen3.5-2B, Gemma 4 E2B).
+
+## Warning for the model-agnostic code
+
+This shortlist is a real test of the "changing model is a text change" rule, and
+parts of it will fail — by design:
+
+- `models.blocks()` finds the block stack structurally, so it should hold across
+  all four.
+- `models.find(model, "attn|self_attn")` will return **fewer matches than there
+  are blocks** on Falcon-H1R (only some layers are attention) and may return
+  nothing useful on LFM2.5's conv blocks. That is the correct outcome — a loud
+  mismatch rather than silently analysing the wrong tensors.
+- Any code assuming `n_layers == len(attention_layers)` breaks on Falcon-H1R.
+- Parameter-count code must decide explicitly between total, active, and
+  effective parameters. Gemma 4 E4B and LFM2.5-8B-A1B disagree on all three.
+
+## Verification status
+
+Release dates, parameter counts, and architecture claims were taken from the
+sources below rather than from model memory. **Licences were not individually
+verified** — Qwen3.5 and Gemma 4 are reported as Apache-2.0; Falcon-H1R and
+LFM2.5 ship under their vendors' own licences and should be checked before any
+commercial use.
+
+Two candidates were considered and rejected: **Mamba-3** (Apache-2.0,
+17 Mar 2026) is a genuine pure-SSM architecture but published checkpoints stop
+around 1.5B, so it does not meet the ~7B bar; **Nemotron 3 Nano** is a
+Mamba-2/attention MoE hybrid but is 31.6B total (3B active), too large here.
