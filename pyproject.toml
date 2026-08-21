@@ -66,3 +66,6 @@ select = ["E", "F", "I", "UP", "B"]
 # I001: import order in notebooks is semantically significant - `research` must
 #       come first, so isort's grouping must not reorder it.
 "notebooks/*.ipynb" = ["F401", "I001"]
+# Same reason for scripts: isort would sort `huggingface_hub` above `research`,
+# and the HF cache pin would then arrive after the hub had already read it.
+"scripts/*.py" = ["I001"]

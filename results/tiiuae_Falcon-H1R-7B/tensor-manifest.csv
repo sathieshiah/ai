@@ -1,0 +1,752 @@
+name,role,component,layer,dtype,shape,params
+lm_head.weight,lm_head.weight,language model,,BF16,"(130048, 3072)",399507456
+model.embed_tokens.weight,model.embed_tokens.weight,language model,,BF16,"(130048, 3072)",399507456
+model.final_layernorm.weight,model.final_layernorm.weight,language model,,BF16,"(3072,)",3072
+model.layers.0.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,0.0,BF16,"(3072, 12288)",37748736
+model.layers.0.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,0.0,BF16,"(12288, 3072)",37748736
+model.layers.0.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,0.0,BF16,"(12288, 3072)",37748736
+model.layers.0.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,0.0,BF16,"(3072,)",3072
+model.layers.0.mamba.A_log,model.layers.N.mamba.A_log,language model,0.0,BF16,"(24,)",24
+model.layers.0.mamba.D,model.layers.N.mamba.D,language model,0.0,BF16,"(24,)",24
+model.layers.0.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,0.0,BF16,"(3584,)",3584
+model.layers.0.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,0.0,BF16,"(3584, 1, 4)",14336
+model.layers.0.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,0.0,BF16,"(24,)",24
+model.layers.0.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,0.0,BF16,"(6680, 3072)",20520960
+model.layers.0.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,0.0,BF16,"(3072,)",3072
+model.layers.0.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,0.0,BF16,"(3072, 3072)",9437184
+model.layers.0.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,0.0,BF16,"(3072,)",3072
+model.layers.0.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,0.0,BF16,"(256, 3072)",786432
+model.layers.0.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,0.0,BF16,"(3072, 1536)",4718592
+model.layers.0.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,0.0,BF16,"(1536, 3072)",4718592
+model.layers.0.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,0.0,BF16,"(256, 3072)",786432
+model.layers.1.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,1.0,BF16,"(3072, 12288)",37748736
+model.layers.1.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,1.0,BF16,"(12288, 3072)",37748736
+model.layers.1.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,1.0,BF16,"(12288, 3072)",37748736
+model.layers.1.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,1.0,BF16,"(3072,)",3072
+model.layers.1.mamba.A_log,model.layers.N.mamba.A_log,language model,1.0,BF16,"(24,)",24
+model.layers.1.mamba.D,model.layers.N.mamba.D,language model,1.0,BF16,"(24,)",24
+model.layers.1.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,1.0,BF16,"(3584,)",3584
+model.layers.1.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,1.0,BF16,"(3584, 1, 4)",14336
+model.layers.1.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,1.0,BF16,"(24,)",24
+model.layers.1.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,1.0,BF16,"(6680, 3072)",20520960
+model.layers.1.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,1.0,BF16,"(3072,)",3072
+model.layers.1.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,1.0,BF16,"(3072, 3072)",9437184
+model.layers.1.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,1.0,BF16,"(3072,)",3072
+model.layers.1.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,1.0,BF16,"(256, 3072)",786432
+model.layers.1.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,1.0,BF16,"(3072, 1536)",4718592
+model.layers.1.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,1.0,BF16,"(1536, 3072)",4718592
+model.layers.1.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,1.0,BF16,"(256, 3072)",786432
+model.layers.10.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,10.0,BF16,"(3072, 12288)",37748736
+model.layers.10.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,10.0,BF16,"(12288, 3072)",37748736
+model.layers.10.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,10.0,BF16,"(12288, 3072)",37748736
+model.layers.10.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,10.0,BF16,"(3072,)",3072
+model.layers.10.mamba.A_log,model.layers.N.mamba.A_log,language model,10.0,BF16,"(24,)",24
+model.layers.10.mamba.D,model.layers.N.mamba.D,language model,10.0,BF16,"(24,)",24
+model.layers.10.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,10.0,BF16,"(3584,)",3584
+model.layers.10.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,10.0,BF16,"(3584, 1, 4)",14336
+model.layers.10.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,10.0,BF16,"(24,)",24
+model.layers.10.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,10.0,BF16,"(6680, 3072)",20520960
+model.layers.10.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,10.0,BF16,"(3072,)",3072
+model.layers.10.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,10.0,BF16,"(3072, 3072)",9437184
+model.layers.10.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,10.0,BF16,"(3072,)",3072
+model.layers.10.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,10.0,BF16,"(256, 3072)",786432
+model.layers.10.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,10.0,BF16,"(3072, 1536)",4718592
+model.layers.10.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,10.0,BF16,"(1536, 3072)",4718592
+model.layers.10.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,10.0,BF16,"(256, 3072)",786432
+model.layers.11.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,11.0,BF16,"(3072, 12288)",37748736
+model.layers.11.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,11.0,BF16,"(12288, 3072)",37748736
+model.layers.11.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,11.0,BF16,"(12288, 3072)",37748736
+model.layers.11.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,11.0,BF16,"(3072,)",3072
+model.layers.11.mamba.A_log,model.layers.N.mamba.A_log,language model,11.0,BF16,"(24,)",24
+model.layers.11.mamba.D,model.layers.N.mamba.D,language model,11.0,BF16,"(24,)",24
+model.layers.11.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,11.0,BF16,"(3584,)",3584
+model.layers.11.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,11.0,BF16,"(3584, 1, 4)",14336
+model.layers.11.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,11.0,BF16,"(24,)",24
+model.layers.11.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,11.0,BF16,"(6680, 3072)",20520960
+model.layers.11.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,11.0,BF16,"(3072,)",3072
+model.layers.11.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,11.0,BF16,"(3072, 3072)",9437184
+model.layers.11.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,11.0,BF16,"(3072,)",3072
+model.layers.11.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,11.0,BF16,"(256, 3072)",786432
+model.layers.11.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,11.0,BF16,"(3072, 1536)",4718592
+model.layers.11.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,11.0,BF16,"(1536, 3072)",4718592
+model.layers.11.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,11.0,BF16,"(256, 3072)",786432
+model.layers.12.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,12.0,BF16,"(3072, 12288)",37748736
+model.layers.12.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,12.0,BF16,"(12288, 3072)",37748736
+model.layers.12.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,12.0,BF16,"(12288, 3072)",37748736
+model.layers.12.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,12.0,BF16,"(3072,)",3072
+model.layers.12.mamba.A_log,model.layers.N.mamba.A_log,language model,12.0,BF16,"(24,)",24
+model.layers.12.mamba.D,model.layers.N.mamba.D,language model,12.0,BF16,"(24,)",24
+model.layers.12.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,12.0,BF16,"(3584,)",3584
+model.layers.12.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,12.0,BF16,"(3584, 1, 4)",14336
+model.layers.12.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,12.0,BF16,"(24,)",24
+model.layers.12.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,12.0,BF16,"(6680, 3072)",20520960
+model.layers.12.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,12.0,BF16,"(3072,)",3072
+model.layers.12.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,12.0,BF16,"(3072, 3072)",9437184
+model.layers.12.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,12.0,BF16,"(3072,)",3072
+model.layers.12.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,12.0,BF16,"(256, 3072)",786432
+model.layers.12.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,12.0,BF16,"(3072, 1536)",4718592
+model.layers.12.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,12.0,BF16,"(1536, 3072)",4718592
+model.layers.12.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,12.0,BF16,"(256, 3072)",786432
+model.layers.13.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,13.0,BF16,"(3072, 12288)",37748736
+model.layers.13.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,13.0,BF16,"(12288, 3072)",37748736
+model.layers.13.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,13.0,BF16,"(12288, 3072)",37748736
+model.layers.13.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,13.0,BF16,"(3072,)",3072
+model.layers.13.mamba.A_log,model.layers.N.mamba.A_log,language model,13.0,BF16,"(24,)",24
+model.layers.13.mamba.D,model.layers.N.mamba.D,language model,13.0,BF16,"(24,)",24
+model.layers.13.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,13.0,BF16,"(3584,)",3584
+model.layers.13.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,13.0,BF16,"(3584, 1, 4)",14336
+model.layers.13.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,13.0,BF16,"(24,)",24
+model.layers.13.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,13.0,BF16,"(6680, 3072)",20520960
+model.layers.13.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,13.0,BF16,"(3072,)",3072
+model.layers.13.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,13.0,BF16,"(3072, 3072)",9437184
+model.layers.13.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,13.0,BF16,"(3072,)",3072
+model.layers.13.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,13.0,BF16,"(256, 3072)",786432
+model.layers.13.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,13.0,BF16,"(3072, 1536)",4718592
+model.layers.13.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,13.0,BF16,"(1536, 3072)",4718592
+model.layers.13.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,13.0,BF16,"(256, 3072)",786432
+model.layers.14.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,14.0,BF16,"(3072, 12288)",37748736
+model.layers.14.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,14.0,BF16,"(12288, 3072)",37748736
+model.layers.14.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,14.0,BF16,"(12288, 3072)",37748736
+model.layers.14.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,14.0,BF16,"(3072,)",3072
+model.layers.14.mamba.A_log,model.layers.N.mamba.A_log,language model,14.0,BF16,"(24,)",24
+model.layers.14.mamba.D,model.layers.N.mamba.D,language model,14.0,BF16,"(24,)",24
+model.layers.14.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,14.0,BF16,"(3584,)",3584
+model.layers.14.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,14.0,BF16,"(3584, 1, 4)",14336
+model.layers.14.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,14.0,BF16,"(24,)",24
+model.layers.14.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,14.0,BF16,"(6680, 3072)",20520960
+model.layers.14.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,14.0,BF16,"(3072,)",3072
+model.layers.14.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,14.0,BF16,"(3072, 3072)",9437184
+model.layers.14.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,14.0,BF16,"(3072,)",3072
+model.layers.14.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,14.0,BF16,"(256, 3072)",786432
+model.layers.14.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,14.0,BF16,"(3072, 1536)",4718592
+model.layers.14.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,14.0,BF16,"(1536, 3072)",4718592
+model.layers.14.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,14.0,BF16,"(256, 3072)",786432
+model.layers.15.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,15.0,BF16,"(3072, 12288)",37748736
+model.layers.15.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,15.0,BF16,"(12288, 3072)",37748736
+model.layers.15.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,15.0,BF16,"(12288, 3072)",37748736
+model.layers.15.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,15.0,BF16,"(3072,)",3072
+model.layers.15.mamba.A_log,model.layers.N.mamba.A_log,language model,15.0,BF16,"(24,)",24
+model.layers.15.mamba.D,model.layers.N.mamba.D,language model,15.0,BF16,"(24,)",24
+model.layers.15.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,15.0,BF16,"(3584,)",3584
+model.layers.15.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,15.0,BF16,"(3584, 1, 4)",14336
+model.layers.15.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,15.0,BF16,"(24,)",24
+model.layers.15.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,15.0,BF16,"(6680, 3072)",20520960
+model.layers.15.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,15.0,BF16,"(3072,)",3072
+model.layers.15.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,15.0,BF16,"(3072, 3072)",9437184
+model.layers.15.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,15.0,BF16,"(3072,)",3072
+model.layers.15.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,15.0,BF16,"(256, 3072)",786432
+model.layers.15.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,15.0,BF16,"(3072, 1536)",4718592
+model.layers.15.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,15.0,BF16,"(1536, 3072)",4718592
+model.layers.15.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,15.0,BF16,"(256, 3072)",786432
+model.layers.16.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,16.0,BF16,"(3072, 12288)",37748736
+model.layers.16.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,16.0,BF16,"(12288, 3072)",37748736
+model.layers.16.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,16.0,BF16,"(12288, 3072)",37748736
+model.layers.16.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,16.0,BF16,"(3072,)",3072
+model.layers.16.mamba.A_log,model.layers.N.mamba.A_log,language model,16.0,BF16,"(24,)",24
+model.layers.16.mamba.D,model.layers.N.mamba.D,language model,16.0,BF16,"(24,)",24
+model.layers.16.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,16.0,BF16,"(3584,)",3584
+model.layers.16.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,16.0,BF16,"(3584, 1, 4)",14336
+model.layers.16.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,16.0,BF16,"(24,)",24
+model.layers.16.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,16.0,BF16,"(6680, 3072)",20520960
+model.layers.16.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,16.0,BF16,"(3072,)",3072
+model.layers.16.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,16.0,BF16,"(3072, 3072)",9437184
+model.layers.16.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,16.0,BF16,"(3072,)",3072
+model.layers.16.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,16.0,BF16,"(256, 3072)",786432
+model.layers.16.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,16.0,BF16,"(3072, 1536)",4718592
+model.layers.16.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,16.0,BF16,"(1536, 3072)",4718592
+model.layers.16.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,16.0,BF16,"(256, 3072)",786432
+model.layers.17.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,17.0,BF16,"(3072, 12288)",37748736
+model.layers.17.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,17.0,BF16,"(12288, 3072)",37748736
+model.layers.17.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,17.0,BF16,"(12288, 3072)",37748736
+model.layers.17.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,17.0,BF16,"(3072,)",3072
+model.layers.17.mamba.A_log,model.layers.N.mamba.A_log,language model,17.0,BF16,"(24,)",24
+model.layers.17.mamba.D,model.layers.N.mamba.D,language model,17.0,BF16,"(24,)",24
+model.layers.17.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,17.0,BF16,"(3584,)",3584
+model.layers.17.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,17.0,BF16,"(3584, 1, 4)",14336
+model.layers.17.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,17.0,BF16,"(24,)",24
+model.layers.17.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,17.0,BF16,"(6680, 3072)",20520960
+model.layers.17.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,17.0,BF16,"(3072,)",3072
+model.layers.17.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,17.0,BF16,"(3072, 3072)",9437184
+model.layers.17.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,17.0,BF16,"(3072,)",3072
+model.layers.17.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,17.0,BF16,"(256, 3072)",786432
+model.layers.17.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,17.0,BF16,"(3072, 1536)",4718592
+model.layers.17.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,17.0,BF16,"(1536, 3072)",4718592
+model.layers.17.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,17.0,BF16,"(256, 3072)",786432
+model.layers.18.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,18.0,BF16,"(3072, 12288)",37748736
+model.layers.18.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,18.0,BF16,"(12288, 3072)",37748736
+model.layers.18.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,18.0,BF16,"(12288, 3072)",37748736
+model.layers.18.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,18.0,BF16,"(3072,)",3072
+model.layers.18.mamba.A_log,model.layers.N.mamba.A_log,language model,18.0,BF16,"(24,)",24
+model.layers.18.mamba.D,model.layers.N.mamba.D,language model,18.0,BF16,"(24,)",24
+model.layers.18.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,18.0,BF16,"(3584,)",3584
+model.layers.18.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,18.0,BF16,"(3584, 1, 4)",14336
+model.layers.18.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,18.0,BF16,"(24,)",24
+model.layers.18.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,18.0,BF16,"(6680, 3072)",20520960
+model.layers.18.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,18.0,BF16,"(3072,)",3072
+model.layers.18.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,18.0,BF16,"(3072, 3072)",9437184
+model.layers.18.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,18.0,BF16,"(3072,)",3072
+model.layers.18.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,18.0,BF16,"(256, 3072)",786432
+model.layers.18.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,18.0,BF16,"(3072, 1536)",4718592
+model.layers.18.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,18.0,BF16,"(1536, 3072)",4718592
+model.layers.18.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,18.0,BF16,"(256, 3072)",786432
+model.layers.19.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,19.0,BF16,"(3072, 12288)",37748736
+model.layers.19.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,19.0,BF16,"(12288, 3072)",37748736
+model.layers.19.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,19.0,BF16,"(12288, 3072)",37748736
+model.layers.19.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,19.0,BF16,"(3072,)",3072
+model.layers.19.mamba.A_log,model.layers.N.mamba.A_log,language model,19.0,BF16,"(24,)",24
+model.layers.19.mamba.D,model.layers.N.mamba.D,language model,19.0,BF16,"(24,)",24
+model.layers.19.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,19.0,BF16,"(3584,)",3584
+model.layers.19.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,19.0,BF16,"(3584, 1, 4)",14336
+model.layers.19.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,19.0,BF16,"(24,)",24
+model.layers.19.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,19.0,BF16,"(6680, 3072)",20520960
+model.layers.19.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,19.0,BF16,"(3072,)",3072
+model.layers.19.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,19.0,BF16,"(3072, 3072)",9437184
+model.layers.19.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,19.0,BF16,"(3072,)",3072
+model.layers.19.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,19.0,BF16,"(256, 3072)",786432
+model.layers.19.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,19.0,BF16,"(3072, 1536)",4718592
+model.layers.19.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,19.0,BF16,"(1536, 3072)",4718592
+model.layers.19.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,19.0,BF16,"(256, 3072)",786432
+model.layers.2.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,2.0,BF16,"(3072, 12288)",37748736
+model.layers.2.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,2.0,BF16,"(12288, 3072)",37748736
+model.layers.2.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,2.0,BF16,"(12288, 3072)",37748736
+model.layers.2.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,2.0,BF16,"(3072,)",3072
+model.layers.2.mamba.A_log,model.layers.N.mamba.A_log,language model,2.0,BF16,"(24,)",24
+model.layers.2.mamba.D,model.layers.N.mamba.D,language model,2.0,BF16,"(24,)",24
+model.layers.2.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,2.0,BF16,"(3584,)",3584
+model.layers.2.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,2.0,BF16,"(3584, 1, 4)",14336
+model.layers.2.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,2.0,BF16,"(24,)",24
+model.layers.2.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,2.0,BF16,"(6680, 3072)",20520960
+model.layers.2.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,2.0,BF16,"(3072,)",3072
+model.layers.2.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,2.0,BF16,"(3072, 3072)",9437184
+model.layers.2.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,2.0,BF16,"(3072,)",3072
+model.layers.2.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,2.0,BF16,"(256, 3072)",786432
+model.layers.2.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,2.0,BF16,"(3072, 1536)",4718592
+model.layers.2.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,2.0,BF16,"(1536, 3072)",4718592
+model.layers.2.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,2.0,BF16,"(256, 3072)",786432
+model.layers.20.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,20.0,BF16,"(3072, 12288)",37748736
+model.layers.20.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,20.0,BF16,"(12288, 3072)",37748736
+model.layers.20.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,20.0,BF16,"(12288, 3072)",37748736
+model.layers.20.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,20.0,BF16,"(3072,)",3072
+model.layers.20.mamba.A_log,model.layers.N.mamba.A_log,language model,20.0,BF16,"(24,)",24
+model.layers.20.mamba.D,model.layers.N.mamba.D,language model,20.0,BF16,"(24,)",24
+model.layers.20.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,20.0,BF16,"(3584,)",3584
+model.layers.20.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,20.0,BF16,"(3584, 1, 4)",14336
+model.layers.20.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,20.0,BF16,"(24,)",24
+model.layers.20.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,20.0,BF16,"(6680, 3072)",20520960
+model.layers.20.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,20.0,BF16,"(3072,)",3072
+model.layers.20.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,20.0,BF16,"(3072, 3072)",9437184
+model.layers.20.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,20.0,BF16,"(3072,)",3072
+model.layers.20.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,20.0,BF16,"(256, 3072)",786432
+model.layers.20.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,20.0,BF16,"(3072, 1536)",4718592
+model.layers.20.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,20.0,BF16,"(1536, 3072)",4718592
+model.layers.20.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,20.0,BF16,"(256, 3072)",786432
+model.layers.21.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,21.0,BF16,"(3072, 12288)",37748736
+model.layers.21.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,21.0,BF16,"(12288, 3072)",37748736
+model.layers.21.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,21.0,BF16,"(12288, 3072)",37748736
+model.layers.21.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,21.0,BF16,"(3072,)",3072
+model.layers.21.mamba.A_log,model.layers.N.mamba.A_log,language model,21.0,BF16,"(24,)",24
+model.layers.21.mamba.D,model.layers.N.mamba.D,language model,21.0,BF16,"(24,)",24
+model.layers.21.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,21.0,BF16,"(3584,)",3584
+model.layers.21.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,21.0,BF16,"(3584, 1, 4)",14336
+model.layers.21.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,21.0,BF16,"(24,)",24
+model.layers.21.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,21.0,BF16,"(6680, 3072)",20520960
+model.layers.21.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,21.0,BF16,"(3072,)",3072
+model.layers.21.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,21.0,BF16,"(3072, 3072)",9437184
+model.layers.21.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,21.0,BF16,"(3072,)",3072
+model.layers.21.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,21.0,BF16,"(256, 3072)",786432
+model.layers.21.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,21.0,BF16,"(3072, 1536)",4718592
+model.layers.21.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,21.0,BF16,"(1536, 3072)",4718592
+model.layers.21.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,21.0,BF16,"(256, 3072)",786432
+model.layers.22.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,22.0,BF16,"(3072, 12288)",37748736
+model.layers.22.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,22.0,BF16,"(12288, 3072)",37748736
+model.layers.22.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,22.0,BF16,"(12288, 3072)",37748736
+model.layers.22.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,22.0,BF16,"(3072,)",3072
+model.layers.22.mamba.A_log,model.layers.N.mamba.A_log,language model,22.0,BF16,"(24,)",24
+model.layers.22.mamba.D,model.layers.N.mamba.D,language model,22.0,BF16,"(24,)",24
+model.layers.22.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,22.0,BF16,"(3584,)",3584
+model.layers.22.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,22.0,BF16,"(3584, 1, 4)",14336
+model.layers.22.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,22.0,BF16,"(24,)",24
+model.layers.22.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,22.0,BF16,"(6680, 3072)",20520960
+model.layers.22.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,22.0,BF16,"(3072,)",3072
+model.layers.22.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,22.0,BF16,"(3072, 3072)",9437184
+model.layers.22.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,22.0,BF16,"(3072,)",3072
+model.layers.22.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,22.0,BF16,"(256, 3072)",786432
+model.layers.22.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,22.0,BF16,"(3072, 1536)",4718592
+model.layers.22.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,22.0,BF16,"(1536, 3072)",4718592
+model.layers.22.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,22.0,BF16,"(256, 3072)",786432
+model.layers.23.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,23.0,BF16,"(3072, 12288)",37748736
+model.layers.23.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,23.0,BF16,"(12288, 3072)",37748736
+model.layers.23.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,23.0,BF16,"(12288, 3072)",37748736
+model.layers.23.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,23.0,BF16,"(3072,)",3072
+model.layers.23.mamba.A_log,model.layers.N.mamba.A_log,language model,23.0,BF16,"(24,)",24
+model.layers.23.mamba.D,model.layers.N.mamba.D,language model,23.0,BF16,"(24,)",24
+model.layers.23.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,23.0,BF16,"(3584,)",3584
+model.layers.23.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,23.0,BF16,"(3584, 1, 4)",14336
+model.layers.23.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,23.0,BF16,"(24,)",24
+model.layers.23.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,23.0,BF16,"(6680, 3072)",20520960
+model.layers.23.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,23.0,BF16,"(3072,)",3072
+model.layers.23.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,23.0,BF16,"(3072, 3072)",9437184
+model.layers.23.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,23.0,BF16,"(3072,)",3072
+model.layers.23.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,23.0,BF16,"(256, 3072)",786432
+model.layers.23.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,23.0,BF16,"(3072, 1536)",4718592
+model.layers.23.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,23.0,BF16,"(1536, 3072)",4718592
+model.layers.23.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,23.0,BF16,"(256, 3072)",786432
+model.layers.24.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,24.0,BF16,"(3072, 12288)",37748736
+model.layers.24.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,24.0,BF16,"(12288, 3072)",37748736
+model.layers.24.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,24.0,BF16,"(12288, 3072)",37748736
+model.layers.24.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,24.0,BF16,"(3072,)",3072
+model.layers.24.mamba.A_log,model.layers.N.mamba.A_log,language model,24.0,BF16,"(24,)",24
+model.layers.24.mamba.D,model.layers.N.mamba.D,language model,24.0,BF16,"(24,)",24
+model.layers.24.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,24.0,BF16,"(3584,)",3584
+model.layers.24.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,24.0,BF16,"(3584, 1, 4)",14336
+model.layers.24.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,24.0,BF16,"(24,)",24
+model.layers.24.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,24.0,BF16,"(6680, 3072)",20520960
+model.layers.24.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,24.0,BF16,"(3072,)",3072
+model.layers.24.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,24.0,BF16,"(3072, 3072)",9437184
+model.layers.24.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,24.0,BF16,"(3072,)",3072
+model.layers.24.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,24.0,BF16,"(256, 3072)",786432
+model.layers.24.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,24.0,BF16,"(3072, 1536)",4718592
+model.layers.24.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,24.0,BF16,"(1536, 3072)",4718592
+model.layers.24.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,24.0,BF16,"(256, 3072)",786432
+model.layers.25.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,25.0,BF16,"(3072, 12288)",37748736
+model.layers.25.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,25.0,BF16,"(12288, 3072)",37748736
+model.layers.25.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,25.0,BF16,"(12288, 3072)",37748736
+model.layers.25.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,25.0,BF16,"(3072,)",3072
+model.layers.25.mamba.A_log,model.layers.N.mamba.A_log,language model,25.0,BF16,"(24,)",24
+model.layers.25.mamba.D,model.layers.N.mamba.D,language model,25.0,BF16,"(24,)",24
+model.layers.25.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,25.0,BF16,"(3584,)",3584
+model.layers.25.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,25.0,BF16,"(3584, 1, 4)",14336
+model.layers.25.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,25.0,BF16,"(24,)",24
+model.layers.25.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,25.0,BF16,"(6680, 3072)",20520960
+model.layers.25.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,25.0,BF16,"(3072,)",3072
+model.layers.25.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,25.0,BF16,"(3072, 3072)",9437184
+model.layers.25.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,25.0,BF16,"(3072,)",3072
+model.layers.25.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,25.0,BF16,"(256, 3072)",786432
+model.layers.25.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,25.0,BF16,"(3072, 1536)",4718592
+model.layers.25.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,25.0,BF16,"(1536, 3072)",4718592
+model.layers.25.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,25.0,BF16,"(256, 3072)",786432
+model.layers.26.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,26.0,BF16,"(3072, 12288)",37748736
+model.layers.26.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,26.0,BF16,"(12288, 3072)",37748736
+model.layers.26.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,26.0,BF16,"(12288, 3072)",37748736
+model.layers.26.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,26.0,BF16,"(3072,)",3072
+model.layers.26.mamba.A_log,model.layers.N.mamba.A_log,language model,26.0,BF16,"(24,)",24
+model.layers.26.mamba.D,model.layers.N.mamba.D,language model,26.0,BF16,"(24,)",24
+model.layers.26.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,26.0,BF16,"(3584,)",3584
+model.layers.26.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,26.0,BF16,"(3584, 1, 4)",14336
+model.layers.26.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,26.0,BF16,"(24,)",24
+model.layers.26.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,26.0,BF16,"(6680, 3072)",20520960
+model.layers.26.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,26.0,BF16,"(3072,)",3072
+model.layers.26.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,26.0,BF16,"(3072, 3072)",9437184
+model.layers.26.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,26.0,BF16,"(3072,)",3072
+model.layers.26.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,26.0,BF16,"(256, 3072)",786432
+model.layers.26.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,26.0,BF16,"(3072, 1536)",4718592
+model.layers.26.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,26.0,BF16,"(1536, 3072)",4718592
+model.layers.26.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,26.0,BF16,"(256, 3072)",786432
+model.layers.27.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,27.0,BF16,"(3072, 12288)",37748736
+model.layers.27.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,27.0,BF16,"(12288, 3072)",37748736
+model.layers.27.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,27.0,BF16,"(12288, 3072)",37748736
+model.layers.27.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,27.0,BF16,"(3072,)",3072
+model.layers.27.mamba.A_log,model.layers.N.mamba.A_log,language model,27.0,BF16,"(24,)",24
+model.layers.27.mamba.D,model.layers.N.mamba.D,language model,27.0,BF16,"(24,)",24
+model.layers.27.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,27.0,BF16,"(3584,)",3584
+model.layers.27.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,27.0,BF16,"(3584, 1, 4)",14336
+model.layers.27.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,27.0,BF16,"(24,)",24
+model.layers.27.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,27.0,BF16,"(6680, 3072)",20520960
+model.layers.27.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,27.0,BF16,"(3072,)",3072
+model.layers.27.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,27.0,BF16,"(3072, 3072)",9437184
+model.layers.27.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,27.0,BF16,"(3072,)",3072
+model.layers.27.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,27.0,BF16,"(256, 3072)",786432
+model.layers.27.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,27.0,BF16,"(3072, 1536)",4718592
+model.layers.27.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,27.0,BF16,"(1536, 3072)",4718592
+model.layers.27.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,27.0,BF16,"(256, 3072)",786432
+model.layers.28.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,28.0,BF16,"(3072, 12288)",37748736
+model.layers.28.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,28.0,BF16,"(12288, 3072)",37748736
+model.layers.28.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,28.0,BF16,"(12288, 3072)",37748736
+model.layers.28.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,28.0,BF16,"(3072,)",3072
+model.layers.28.mamba.A_log,model.layers.N.mamba.A_log,language model,28.0,BF16,"(24,)",24
+model.layers.28.mamba.D,model.layers.N.mamba.D,language model,28.0,BF16,"(24,)",24
+model.layers.28.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,28.0,BF16,"(3584,)",3584
+model.layers.28.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,28.0,BF16,"(3584, 1, 4)",14336
+model.layers.28.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,28.0,BF16,"(24,)",24
+model.layers.28.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,28.0,BF16,"(6680, 3072)",20520960
+model.layers.28.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,28.0,BF16,"(3072,)",3072
+model.layers.28.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,28.0,BF16,"(3072, 3072)",9437184
+model.layers.28.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,28.0,BF16,"(3072,)",3072
+model.layers.28.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,28.0,BF16,"(256, 3072)",786432
+model.layers.28.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,28.0,BF16,"(3072, 1536)",4718592
+model.layers.28.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,28.0,BF16,"(1536, 3072)",4718592
+model.layers.28.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,28.0,BF16,"(256, 3072)",786432
+model.layers.29.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,29.0,BF16,"(3072, 12288)",37748736
+model.layers.29.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,29.0,BF16,"(12288, 3072)",37748736
+model.layers.29.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,29.0,BF16,"(12288, 3072)",37748736
+model.layers.29.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,29.0,BF16,"(3072,)",3072
+model.layers.29.mamba.A_log,model.layers.N.mamba.A_log,language model,29.0,BF16,"(24,)",24
+model.layers.29.mamba.D,model.layers.N.mamba.D,language model,29.0,BF16,"(24,)",24
+model.layers.29.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,29.0,BF16,"(3584,)",3584
+model.layers.29.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,29.0,BF16,"(3584, 1, 4)",14336
+model.layers.29.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,29.0,BF16,"(24,)",24
+model.layers.29.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,29.0,BF16,"(6680, 3072)",20520960
+model.layers.29.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,29.0,BF16,"(3072,)",3072
+model.layers.29.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,29.0,BF16,"(3072, 3072)",9437184
+model.layers.29.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,29.0,BF16,"(3072,)",3072
+model.layers.29.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,29.0,BF16,"(256, 3072)",786432
+model.layers.29.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,29.0,BF16,"(3072, 1536)",4718592
+model.layers.29.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,29.0,BF16,"(1536, 3072)",4718592
+model.layers.29.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,29.0,BF16,"(256, 3072)",786432
+model.layers.3.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,3.0,BF16,"(3072, 12288)",37748736
+model.layers.3.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,3.0,BF16,"(12288, 3072)",37748736
+model.layers.3.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,3.0,BF16,"(12288, 3072)",37748736
+model.layers.3.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,3.0,BF16,"(3072,)",3072
+model.layers.3.mamba.A_log,model.layers.N.mamba.A_log,language model,3.0,BF16,"(24,)",24
+model.layers.3.mamba.D,model.layers.N.mamba.D,language model,3.0,BF16,"(24,)",24
+model.layers.3.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,3.0,BF16,"(3584,)",3584
+model.layers.3.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,3.0,BF16,"(3584, 1, 4)",14336
+model.layers.3.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,3.0,BF16,"(24,)",24
+model.layers.3.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,3.0,BF16,"(6680, 3072)",20520960
+model.layers.3.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,3.0,BF16,"(3072,)",3072
+model.layers.3.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,3.0,BF16,"(3072, 3072)",9437184
+model.layers.3.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,3.0,BF16,"(3072,)",3072
+model.layers.3.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,3.0,BF16,"(256, 3072)",786432
+model.layers.3.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,3.0,BF16,"(3072, 1536)",4718592
+model.layers.3.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,3.0,BF16,"(1536, 3072)",4718592
+model.layers.3.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,3.0,BF16,"(256, 3072)",786432
+model.layers.30.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,30.0,BF16,"(3072, 12288)",37748736
+model.layers.30.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,30.0,BF16,"(12288, 3072)",37748736
+model.layers.30.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,30.0,BF16,"(12288, 3072)",37748736
+model.layers.30.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,30.0,BF16,"(3072,)",3072
+model.layers.30.mamba.A_log,model.layers.N.mamba.A_log,language model,30.0,BF16,"(24,)",24
+model.layers.30.mamba.D,model.layers.N.mamba.D,language model,30.0,BF16,"(24,)",24
+model.layers.30.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,30.0,BF16,"(3584,)",3584
+model.layers.30.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,30.0,BF16,"(3584, 1, 4)",14336
+model.layers.30.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,30.0,BF16,"(24,)",24
+model.layers.30.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,30.0,BF16,"(6680, 3072)",20520960
+model.layers.30.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,30.0,BF16,"(3072,)",3072
+model.layers.30.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,30.0,BF16,"(3072, 3072)",9437184
+model.layers.30.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,30.0,BF16,"(3072,)",3072
+model.layers.30.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,30.0,BF16,"(256, 3072)",786432
+model.layers.30.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,30.0,BF16,"(3072, 1536)",4718592
+model.layers.30.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,30.0,BF16,"(1536, 3072)",4718592
+model.layers.30.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,30.0,BF16,"(256, 3072)",786432
+model.layers.31.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,31.0,BF16,"(3072, 12288)",37748736
+model.layers.31.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,31.0,BF16,"(12288, 3072)",37748736
+model.layers.31.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,31.0,BF16,"(12288, 3072)",37748736
+model.layers.31.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,31.0,BF16,"(3072,)",3072
+model.layers.31.mamba.A_log,model.layers.N.mamba.A_log,language model,31.0,BF16,"(24,)",24
+model.layers.31.mamba.D,model.layers.N.mamba.D,language model,31.0,BF16,"(24,)",24
+model.layers.31.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,31.0,BF16,"(3584,)",3584
+model.layers.31.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,31.0,BF16,"(3584, 1, 4)",14336
+model.layers.31.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,31.0,BF16,"(24,)",24
+model.layers.31.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,31.0,BF16,"(6680, 3072)",20520960
+model.layers.31.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,31.0,BF16,"(3072,)",3072
+model.layers.31.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,31.0,BF16,"(3072, 3072)",9437184
+model.layers.31.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,31.0,BF16,"(3072,)",3072
+model.layers.31.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,31.0,BF16,"(256, 3072)",786432
+model.layers.31.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,31.0,BF16,"(3072, 1536)",4718592
+model.layers.31.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,31.0,BF16,"(1536, 3072)",4718592
+model.layers.31.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,31.0,BF16,"(256, 3072)",786432
+model.layers.32.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,32.0,BF16,"(3072, 12288)",37748736
+model.layers.32.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,32.0,BF16,"(12288, 3072)",37748736
+model.layers.32.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,32.0,BF16,"(12288, 3072)",37748736
+model.layers.32.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,32.0,BF16,"(3072,)",3072
+model.layers.32.mamba.A_log,model.layers.N.mamba.A_log,language model,32.0,BF16,"(24,)",24
+model.layers.32.mamba.D,model.layers.N.mamba.D,language model,32.0,BF16,"(24,)",24
+model.layers.32.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,32.0,BF16,"(3584,)",3584
+model.layers.32.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,32.0,BF16,"(3584, 1, 4)",14336
+model.layers.32.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,32.0,BF16,"(24,)",24
+model.layers.32.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,32.0,BF16,"(6680, 3072)",20520960
+model.layers.32.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,32.0,BF16,"(3072,)",3072
+model.layers.32.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,32.0,BF16,"(3072, 3072)",9437184
+model.layers.32.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,32.0,BF16,"(3072,)",3072
+model.layers.32.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,32.0,BF16,"(256, 3072)",786432
+model.layers.32.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,32.0,BF16,"(3072, 1536)",4718592
+model.layers.32.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,32.0,BF16,"(1536, 3072)",4718592
+model.layers.32.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,32.0,BF16,"(256, 3072)",786432
+model.layers.33.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,33.0,BF16,"(3072, 12288)",37748736
+model.layers.33.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,33.0,BF16,"(12288, 3072)",37748736
+model.layers.33.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,33.0,BF16,"(12288, 3072)",37748736
+model.layers.33.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,33.0,BF16,"(3072,)",3072
+model.layers.33.mamba.A_log,model.layers.N.mamba.A_log,language model,33.0,BF16,"(24,)",24
+model.layers.33.mamba.D,model.layers.N.mamba.D,language model,33.0,BF16,"(24,)",24
+model.layers.33.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,33.0,BF16,"(3584,)",3584
+model.layers.33.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,33.0,BF16,"(3584, 1, 4)",14336
+model.layers.33.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,33.0,BF16,"(24,)",24
+model.layers.33.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,33.0,BF16,"(6680, 3072)",20520960
+model.layers.33.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,33.0,BF16,"(3072,)",3072
+model.layers.33.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,33.0,BF16,"(3072, 3072)",9437184
+model.layers.33.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,33.0,BF16,"(3072,)",3072
+model.layers.33.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,33.0,BF16,"(256, 3072)",786432
+model.layers.33.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,33.0,BF16,"(3072, 1536)",4718592
+model.layers.33.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,33.0,BF16,"(1536, 3072)",4718592
+model.layers.33.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,33.0,BF16,"(256, 3072)",786432
+model.layers.34.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,34.0,BF16,"(3072, 12288)",37748736
+model.layers.34.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,34.0,BF16,"(12288, 3072)",37748736
+model.layers.34.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,34.0,BF16,"(12288, 3072)",37748736
+model.layers.34.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,34.0,BF16,"(3072,)",3072
+model.layers.34.mamba.A_log,model.layers.N.mamba.A_log,language model,34.0,BF16,"(24,)",24
+model.layers.34.mamba.D,model.layers.N.mamba.D,language model,34.0,BF16,"(24,)",24
+model.layers.34.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,34.0,BF16,"(3584,)",3584
+model.layers.34.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,34.0,BF16,"(3584, 1, 4)",14336
+model.layers.34.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,34.0,BF16,"(24,)",24
+model.layers.34.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,34.0,BF16,"(6680, 3072)",20520960
+model.layers.34.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,34.0,BF16,"(3072,)",3072
+model.layers.34.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,34.0,BF16,"(3072, 3072)",9437184
+model.layers.34.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,34.0,BF16,"(3072,)",3072
+model.layers.34.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,34.0,BF16,"(256, 3072)",786432
+model.layers.34.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,34.0,BF16,"(3072, 1536)",4718592
+model.layers.34.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,34.0,BF16,"(1536, 3072)",4718592
+model.layers.34.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,34.0,BF16,"(256, 3072)",786432
+model.layers.35.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,35.0,BF16,"(3072, 12288)",37748736
+model.layers.35.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,35.0,BF16,"(12288, 3072)",37748736
+model.layers.35.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,35.0,BF16,"(12288, 3072)",37748736
+model.layers.35.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,35.0,BF16,"(3072,)",3072
+model.layers.35.mamba.A_log,model.layers.N.mamba.A_log,language model,35.0,BF16,"(24,)",24
+model.layers.35.mamba.D,model.layers.N.mamba.D,language model,35.0,BF16,"(24,)",24
+model.layers.35.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,35.0,BF16,"(3584,)",3584
+model.layers.35.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,35.0,BF16,"(3584, 1, 4)",14336
+model.layers.35.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,35.0,BF16,"(24,)",24
+model.layers.35.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,35.0,BF16,"(6680, 3072)",20520960
+model.layers.35.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,35.0,BF16,"(3072,)",3072
+model.layers.35.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,35.0,BF16,"(3072, 3072)",9437184
+model.layers.35.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,35.0,BF16,"(3072,)",3072
+model.layers.35.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,35.0,BF16,"(256, 3072)",786432
+model.layers.35.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,35.0,BF16,"(3072, 1536)",4718592
+model.layers.35.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,35.0,BF16,"(1536, 3072)",4718592
+model.layers.35.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,35.0,BF16,"(256, 3072)",786432
+model.layers.36.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,36.0,BF16,"(3072, 12288)",37748736
+model.layers.36.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,36.0,BF16,"(12288, 3072)",37748736
+model.layers.36.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,36.0,BF16,"(12288, 3072)",37748736
+model.layers.36.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,36.0,BF16,"(3072,)",3072
+model.layers.36.mamba.A_log,model.layers.N.mamba.A_log,language model,36.0,BF16,"(24,)",24
+model.layers.36.mamba.D,model.layers.N.mamba.D,language model,36.0,BF16,"(24,)",24
+model.layers.36.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,36.0,BF16,"(3584,)",3584
+model.layers.36.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,36.0,BF16,"(3584, 1, 4)",14336
+model.layers.36.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,36.0,BF16,"(24,)",24
+model.layers.36.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,36.0,BF16,"(6680, 3072)",20520960
+model.layers.36.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,36.0,BF16,"(3072,)",3072
+model.layers.36.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,36.0,BF16,"(3072, 3072)",9437184
+model.layers.36.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,36.0,BF16,"(3072,)",3072
+model.layers.36.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,36.0,BF16,"(256, 3072)",786432
+model.layers.36.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,36.0,BF16,"(3072, 1536)",4718592
+model.layers.36.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,36.0,BF16,"(1536, 3072)",4718592
+model.layers.36.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,36.0,BF16,"(256, 3072)",786432
+model.layers.37.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,37.0,BF16,"(3072, 12288)",37748736
+model.layers.37.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,37.0,BF16,"(12288, 3072)",37748736
+model.layers.37.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,37.0,BF16,"(12288, 3072)",37748736
+model.layers.37.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,37.0,BF16,"(3072,)",3072
+model.layers.37.mamba.A_log,model.layers.N.mamba.A_log,language model,37.0,BF16,"(24,)",24
+model.layers.37.mamba.D,model.layers.N.mamba.D,language model,37.0,BF16,"(24,)",24
+model.layers.37.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,37.0,BF16,"(3584,)",3584
+model.layers.37.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,37.0,BF16,"(3584, 1, 4)",14336
+model.layers.37.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,37.0,BF16,"(24,)",24
+model.layers.37.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,37.0,BF16,"(6680, 3072)",20520960
+model.layers.37.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,37.0,BF16,"(3072,)",3072
+model.layers.37.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,37.0,BF16,"(3072, 3072)",9437184
+model.layers.37.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,37.0,BF16,"(3072,)",3072
+model.layers.37.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,37.0,BF16,"(256, 3072)",786432
+model.layers.37.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,37.0,BF16,"(3072, 1536)",4718592
+model.layers.37.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,37.0,BF16,"(1536, 3072)",4718592
+model.layers.37.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,37.0,BF16,"(256, 3072)",786432
+model.layers.38.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,38.0,BF16,"(3072, 12288)",37748736
+model.layers.38.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,38.0,BF16,"(12288, 3072)",37748736
+model.layers.38.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,38.0,BF16,"(12288, 3072)",37748736
+model.layers.38.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,38.0,BF16,"(3072,)",3072
+model.layers.38.mamba.A_log,model.layers.N.mamba.A_log,language model,38.0,BF16,"(24,)",24
+model.layers.38.mamba.D,model.layers.N.mamba.D,language model,38.0,BF16,"(24,)",24
+model.layers.38.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,38.0,BF16,"(3584,)",3584
+model.layers.38.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,38.0,BF16,"(3584, 1, 4)",14336
+model.layers.38.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,38.0,BF16,"(24,)",24
+model.layers.38.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,38.0,BF16,"(6680, 3072)",20520960
+model.layers.38.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,38.0,BF16,"(3072,)",3072
+model.layers.38.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,38.0,BF16,"(3072, 3072)",9437184
+model.layers.38.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,38.0,BF16,"(3072,)",3072
+model.layers.38.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,38.0,BF16,"(256, 3072)",786432
+model.layers.38.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,38.0,BF16,"(3072, 1536)",4718592
+model.layers.38.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,38.0,BF16,"(1536, 3072)",4718592
+model.layers.38.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,38.0,BF16,"(256, 3072)",786432
+model.layers.39.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,39.0,BF16,"(3072, 12288)",37748736
+model.layers.39.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,39.0,BF16,"(12288, 3072)",37748736
+model.layers.39.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,39.0,BF16,"(12288, 3072)",37748736
+model.layers.39.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,39.0,BF16,"(3072,)",3072
+model.layers.39.mamba.A_log,model.layers.N.mamba.A_log,language model,39.0,BF16,"(24,)",24
+model.layers.39.mamba.D,model.layers.N.mamba.D,language model,39.0,BF16,"(24,)",24
+model.layers.39.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,39.0,BF16,"(3584,)",3584
+model.layers.39.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,39.0,BF16,"(3584, 1, 4)",14336
+model.layers.39.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,39.0,BF16,"(24,)",24
+model.layers.39.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,39.0,BF16,"(6680, 3072)",20520960
+model.layers.39.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,39.0,BF16,"(3072,)",3072
+model.layers.39.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,39.0,BF16,"(3072, 3072)",9437184
+model.layers.39.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,39.0,BF16,"(3072,)",3072
+model.layers.39.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,39.0,BF16,"(256, 3072)",786432
+model.layers.39.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,39.0,BF16,"(3072, 1536)",4718592
+model.layers.39.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,39.0,BF16,"(1536, 3072)",4718592
+model.layers.39.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,39.0,BF16,"(256, 3072)",786432
+model.layers.4.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,4.0,BF16,"(3072, 12288)",37748736
+model.layers.4.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,4.0,BF16,"(12288, 3072)",37748736
+model.layers.4.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,4.0,BF16,"(12288, 3072)",37748736
+model.layers.4.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,4.0,BF16,"(3072,)",3072
+model.layers.4.mamba.A_log,model.layers.N.mamba.A_log,language model,4.0,BF16,"(24,)",24
+model.layers.4.mamba.D,model.layers.N.mamba.D,language model,4.0,BF16,"(24,)",24
+model.layers.4.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,4.0,BF16,"(3584,)",3584
+model.layers.4.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,4.0,BF16,"(3584, 1, 4)",14336
+model.layers.4.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,4.0,BF16,"(24,)",24
+model.layers.4.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,4.0,BF16,"(6680, 3072)",20520960
+model.layers.4.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,4.0,BF16,"(3072,)",3072
+model.layers.4.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,4.0,BF16,"(3072, 3072)",9437184
+model.layers.4.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,4.0,BF16,"(3072,)",3072
+model.layers.4.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,4.0,BF16,"(256, 3072)",786432
+model.layers.4.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,4.0,BF16,"(3072, 1536)",4718592
+model.layers.4.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,4.0,BF16,"(1536, 3072)",4718592
+model.layers.4.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,4.0,BF16,"(256, 3072)",786432
+model.layers.40.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,40.0,BF16,"(3072, 12288)",37748736
+model.layers.40.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,40.0,BF16,"(12288, 3072)",37748736
+model.layers.40.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,40.0,BF16,"(12288, 3072)",37748736
+model.layers.40.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,40.0,BF16,"(3072,)",3072
+model.layers.40.mamba.A_log,model.layers.N.mamba.A_log,language model,40.0,BF16,"(24,)",24
+model.layers.40.mamba.D,model.layers.N.mamba.D,language model,40.0,BF16,"(24,)",24
+model.layers.40.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,40.0,BF16,"(3584,)",3584
+model.layers.40.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,40.0,BF16,"(3584, 1, 4)",14336
+model.layers.40.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,40.0,BF16,"(24,)",24
+model.layers.40.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,40.0,BF16,"(6680, 3072)",20520960
+model.layers.40.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,40.0,BF16,"(3072,)",3072
+model.layers.40.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,40.0,BF16,"(3072, 3072)",9437184
+model.layers.40.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,40.0,BF16,"(3072,)",3072
+model.layers.40.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,40.0,BF16,"(256, 3072)",786432
+model.layers.40.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,40.0,BF16,"(3072, 1536)",4718592
+model.layers.40.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,40.0,BF16,"(1536, 3072)",4718592
+model.layers.40.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,40.0,BF16,"(256, 3072)",786432
+model.layers.41.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,41.0,BF16,"(3072, 12288)",37748736
+model.layers.41.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,41.0,BF16,"(12288, 3072)",37748736
+model.layers.41.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,41.0,BF16,"(12288, 3072)",37748736
+model.layers.41.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,41.0,BF16,"(3072,)",3072
+model.layers.41.mamba.A_log,model.layers.N.mamba.A_log,language model,41.0,BF16,"(24,)",24
+model.layers.41.mamba.D,model.layers.N.mamba.D,language model,41.0,BF16,"(24,)",24
+model.layers.41.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,41.0,BF16,"(3584,)",3584
+model.layers.41.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,41.0,BF16,"(3584, 1, 4)",14336
+model.layers.41.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,41.0,BF16,"(24,)",24
+model.layers.41.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,41.0,BF16,"(6680, 3072)",20520960
+model.layers.41.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,41.0,BF16,"(3072,)",3072
+model.layers.41.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,41.0,BF16,"(3072, 3072)",9437184
+model.layers.41.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,41.0,BF16,"(3072,)",3072
+model.layers.41.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,41.0,BF16,"(256, 3072)",786432
+model.layers.41.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,41.0,BF16,"(3072, 1536)",4718592
+model.layers.41.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,41.0,BF16,"(1536, 3072)",4718592
+model.layers.41.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,41.0,BF16,"(256, 3072)",786432
+model.layers.42.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,42.0,BF16,"(3072, 12288)",37748736
+model.layers.42.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,42.0,BF16,"(12288, 3072)",37748736
+model.layers.42.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,42.0,BF16,"(12288, 3072)",37748736
+model.layers.42.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,42.0,BF16,"(3072,)",3072
+model.layers.42.mamba.A_log,model.layers.N.mamba.A_log,language model,42.0,BF16,"(24,)",24
+model.layers.42.mamba.D,model.layers.N.mamba.D,language model,42.0,BF16,"(24,)",24
+model.layers.42.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,42.0,BF16,"(3584,)",3584
+model.layers.42.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,42.0,BF16,"(3584, 1, 4)",14336
+model.layers.42.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,42.0,BF16,"(24,)",24
+model.layers.42.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,42.0,BF16,"(6680, 3072)",20520960
+model.layers.42.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,42.0,BF16,"(3072,)",3072
+model.layers.42.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,42.0,BF16,"(3072, 3072)",9437184
+model.layers.42.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,42.0,BF16,"(3072,)",3072
+model.layers.42.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,42.0,BF16,"(256, 3072)",786432
+model.layers.42.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,42.0,BF16,"(3072, 1536)",4718592
+model.layers.42.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,42.0,BF16,"(1536, 3072)",4718592
+model.layers.42.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,42.0,BF16,"(256, 3072)",786432
+model.layers.43.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,43.0,BF16,"(3072, 12288)",37748736
+model.layers.43.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,43.0,BF16,"(12288, 3072)",37748736
+model.layers.43.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,43.0,BF16,"(12288, 3072)",37748736
+model.layers.43.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,43.0,BF16,"(3072,)",3072
+model.layers.43.mamba.A_log,model.layers.N.mamba.A_log,language model,43.0,BF16,"(24,)",24
+model.layers.43.mamba.D,model.layers.N.mamba.D,language model,43.0,BF16,"(24,)",24
+model.layers.43.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,43.0,BF16,"(3584,)",3584
+model.layers.43.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,43.0,BF16,"(3584, 1, 4)",14336
+model.layers.43.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,43.0,BF16,"(24,)",24
+model.layers.43.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,43.0,BF16,"(6680, 3072)",20520960
+model.layers.43.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,43.0,BF16,"(3072,)",3072
+model.layers.43.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,43.0,BF16,"(3072, 3072)",9437184
+model.layers.43.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,43.0,BF16,"(3072,)",3072
+model.layers.43.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,43.0,BF16,"(256, 3072)",786432
+model.layers.43.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,43.0,BF16,"(3072, 1536)",4718592
+model.layers.43.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,43.0,BF16,"(1536, 3072)",4718592
+model.layers.43.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,43.0,BF16,"(256, 3072)",786432
+model.layers.5.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,5.0,BF16,"(3072, 12288)",37748736
+model.layers.5.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,5.0,BF16,"(12288, 3072)",37748736
+model.layers.5.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,5.0,BF16,"(12288, 3072)",37748736
+model.layers.5.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,5.0,BF16,"(3072,)",3072
+model.layers.5.mamba.A_log,model.layers.N.mamba.A_log,language model,5.0,BF16,"(24,)",24
+model.layers.5.mamba.D,model.layers.N.mamba.D,language model,5.0,BF16,"(24,)",24
+model.layers.5.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,5.0,BF16,"(3584,)",3584
+model.layers.5.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,5.0,BF16,"(3584, 1, 4)",14336
+model.layers.5.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,5.0,BF16,"(24,)",24
+model.layers.5.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,5.0,BF16,"(6680, 3072)",20520960
+model.layers.5.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,5.0,BF16,"(3072,)",3072
+model.layers.5.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,5.0,BF16,"(3072, 3072)",9437184
+model.layers.5.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,5.0,BF16,"(3072,)",3072
+model.layers.5.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,5.0,BF16,"(256, 3072)",786432
+model.layers.5.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,5.0,BF16,"(3072, 1536)",4718592
+model.layers.5.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,5.0,BF16,"(1536, 3072)",4718592
+model.layers.5.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,5.0,BF16,"(256, 3072)",786432
+model.layers.6.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,6.0,BF16,"(3072, 12288)",37748736
+model.layers.6.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,6.0,BF16,"(12288, 3072)",37748736
+model.layers.6.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,6.0,BF16,"(12288, 3072)",37748736
+model.layers.6.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,6.0,BF16,"(3072,)",3072
+model.layers.6.mamba.A_log,model.layers.N.mamba.A_log,language model,6.0,BF16,"(24,)",24
+model.layers.6.mamba.D,model.layers.N.mamba.D,language model,6.0,BF16,"(24,)",24
+model.layers.6.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,6.0,BF16,"(3584,)",3584
+model.layers.6.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,6.0,BF16,"(3584, 1, 4)",14336
+model.layers.6.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,6.0,BF16,"(24,)",24
+model.layers.6.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,6.0,BF16,"(6680, 3072)",20520960
+model.layers.6.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,6.0,BF16,"(3072,)",3072
+model.layers.6.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,6.0,BF16,"(3072, 3072)",9437184
+model.layers.6.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,6.0,BF16,"(3072,)",3072
+model.layers.6.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,6.0,BF16,"(256, 3072)",786432
+model.layers.6.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,6.0,BF16,"(3072, 1536)",4718592
+model.layers.6.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,6.0,BF16,"(1536, 3072)",4718592
+model.layers.6.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,6.0,BF16,"(256, 3072)",786432
+model.layers.7.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,7.0,BF16,"(3072, 12288)",37748736
+model.layers.7.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,7.0,BF16,"(12288, 3072)",37748736
+model.layers.7.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,7.0,BF16,"(12288, 3072)",37748736
+model.layers.7.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,7.0,BF16,"(3072,)",3072
+model.layers.7.mamba.A_log,model.layers.N.mamba.A_log,language model,7.0,BF16,"(24,)",24
+model.layers.7.mamba.D,model.layers.N.mamba.D,language model,7.0,BF16,"(24,)",24
+model.layers.7.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,7.0,BF16,"(3584,)",3584
+model.layers.7.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,7.0,BF16,"(3584, 1, 4)",14336
+model.layers.7.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,7.0,BF16,"(24,)",24
+model.layers.7.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,7.0,BF16,"(6680, 3072)",20520960
+model.layers.7.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,7.0,BF16,"(3072,)",3072
+model.layers.7.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,7.0,BF16,"(3072, 3072)",9437184
+model.layers.7.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,7.0,BF16,"(3072,)",3072
+model.layers.7.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,7.0,BF16,"(256, 3072)",786432
+model.layers.7.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,7.0,BF16,"(3072, 1536)",4718592
+model.layers.7.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,7.0,BF16,"(1536, 3072)",4718592
+model.layers.7.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,7.0,BF16,"(256, 3072)",786432
+model.layers.8.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,8.0,BF16,"(3072, 12288)",37748736
+model.layers.8.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,8.0,BF16,"(12288, 3072)",37748736
+model.layers.8.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,8.0,BF16,"(12288, 3072)",37748736
+model.layers.8.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,8.0,BF16,"(3072,)",3072
+model.layers.8.mamba.A_log,model.layers.N.mamba.A_log,language model,8.0,BF16,"(24,)",24
+model.layers.8.mamba.D,model.layers.N.mamba.D,language model,8.0,BF16,"(24,)",24
+model.layers.8.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,8.0,BF16,"(3584,)",3584
+model.layers.8.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,8.0,BF16,"(3584, 1, 4)",14336
+model.layers.8.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,8.0,BF16,"(24,)",24
+model.layers.8.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,8.0,BF16,"(6680, 3072)",20520960
+model.layers.8.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,8.0,BF16,"(3072,)",3072
+model.layers.8.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,8.0,BF16,"(3072, 3072)",9437184
+model.layers.8.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,8.0,BF16,"(3072,)",3072
+model.layers.8.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,8.0,BF16,"(256, 3072)",786432
+model.layers.8.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,8.0,BF16,"(3072, 1536)",4718592
+model.layers.8.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,8.0,BF16,"(1536, 3072)",4718592
+model.layers.8.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,8.0,BF16,"(256, 3072)",786432
+model.layers.9.feed_forward.down_proj.weight,model.layers.N.feed_forward.down_proj.weight,language model,9.0,BF16,"(3072, 12288)",37748736
+model.layers.9.feed_forward.gate_proj.weight,model.layers.N.feed_forward.gate_proj.weight,language model,9.0,BF16,"(12288, 3072)",37748736
+model.layers.9.feed_forward.up_proj.weight,model.layers.N.feed_forward.up_proj.weight,language model,9.0,BF16,"(12288, 3072)",37748736
+model.layers.9.input_layernorm.weight,model.layers.N.input_layernorm.weight,language model,9.0,BF16,"(3072,)",3072
+model.layers.9.mamba.A_log,model.layers.N.mamba.A_log,language model,9.0,BF16,"(24,)",24
+model.layers.9.mamba.D,model.layers.N.mamba.D,language model,9.0,BF16,"(24,)",24
+model.layers.9.mamba.conv1d.bias,model.layers.N.mamba.conv1d.bias,language model,9.0,BF16,"(3584,)",3584
+model.layers.9.mamba.conv1d.weight,model.layers.N.mamba.conv1d.weight,language model,9.0,BF16,"(3584, 1, 4)",14336
+model.layers.9.mamba.dt_bias,model.layers.N.mamba.dt_bias,language model,9.0,BF16,"(24,)",24
+model.layers.9.mamba.in_proj.weight,model.layers.N.mamba.in_proj.weight,language model,9.0,BF16,"(6680, 3072)",20520960
+model.layers.9.mamba.norm.weight,model.layers.N.mamba.norm.weight,language model,9.0,BF16,"(3072,)",3072
+model.layers.9.mamba.out_proj.weight,model.layers.N.mamba.out_proj.weight,language model,9.0,BF16,"(3072, 3072)",9437184
+model.layers.9.pre_ff_layernorm.weight,model.layers.N.pre_ff_layernorm.weight,language model,9.0,BF16,"(3072,)",3072
+model.layers.9.self_attn.k_proj.weight,model.layers.N.self_attn.k_proj.weight,language model,9.0,BF16,"(256, 3072)",786432
+model.layers.9.self_attn.o_proj.weight,model.layers.N.self_attn.o_proj.weight,language model,9.0,BF16,"(3072, 1536)",4718592
+model.layers.9.self_attn.q_proj.weight,model.layers.N.self_attn.q_proj.weight,language model,9.0,BF16,"(1536, 3072)",4718592
+model.layers.9.self_attn.v_proj.weight,model.layers.N.self_attn.v_proj.weight,language model,9.0,BF16,"(256, 3072)",786432

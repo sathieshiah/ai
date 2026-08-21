@@ -13,6 +13,13 @@ different mechanisms, not four variations of the same decoder stack.
 | **Gemma 4 E4B** (Google) | 2 Apr 2026 | 8B total / 4.5B effective | MatFormer nesting + Per-Layer Embeddings | 128K |
 | **LFM2.5-8B-A1B** (Liquid AI) | 28 May 2026 | 8.3B total / 1.5B active | Sparse MoE on the LFM2 conv-hybrid backbone | 128K |
 
+> **Correction (2026-08-21):** the "Qwen3.5-9B = dense transformer" claim below
+> came from a release-tracker summary and is **wrong**. Its weights carry
+> `linear_attn.A_log` / `dt_bias` state-space parameters in every decoder layer,
+> putting it in the same mechanism family as Falcon-H1R. The set therefore spans
+> three distinct architecture families, not four. Measured evidence in
+> [weight-layout-comparison.md](weight-layout-comparison.md).
+
 ## All four are autoregressive — verified
 
 Confirmed against vendor documentation, not assumed:

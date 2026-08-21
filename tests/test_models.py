@@ -286,14 +286,16 @@ def test_model_slug_rejects_an_empty_id():
         paths.model_slug("///")
 
 
-def test_results_dir_is_under_results_and_named_for_the_model():
+def test_results_dir_is_under_results_and_named_for_the_model(tmp_path, monkeypatch):
+    monkeypatch.setattr(paths, "RESULTS", tmp_path / "results")
     d = paths.results_dir("google/gemma-3-1b-it")
     assert d.parent == paths.RESULTS
     assert d.name == "google_gemma-3-1b-it"
     assert d.is_dir()
 
 
-def test_results_dir_separates_models():
+def test_results_dir_separates_models(tmp_path, monkeypatch):
+    monkeypatch.setattr(paths, "RESULTS", tmp_path / "results")
     assert paths.results_dir("gpt2") != paths.results_dir("distilgpt2")
 
 

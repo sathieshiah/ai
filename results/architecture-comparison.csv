@@ -1,0 +1,5 @@
+model,params,lm_params,tensors,lm_blocks,lm_roles,components,mechanisms
+Falcon-H1R-7B,7585648736,7585648736,751,44,20,language model,"softmax attention, state-space / linear attn, short convolution"
+Qwen3.5-9B,9653104368,9197093888,775,32,38,language model+vision,"softmax attention, state-space / linear attn, short convolution, vision tower"
+gemma-4-E4B,7996157418,7523967274,2130,42,24,audio+language model+vision,"softmax attention, short convolution, per-layer embedding / altup, vision tower, audio tower, QAT ranges"
+LFM2.5-8B-A1B,8467856832,8467856832,2302,24,21,language model,"softmax attention, sparse MoE, short convolution"
