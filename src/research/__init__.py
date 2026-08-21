@@ -26,3 +26,11 @@ MODELS.mkdir(parents=True, exist_ok=True)
 # Forced assignment, not setdefault - see module docstring.
 os.environ["HF_HUB_CACHE"] = str(MODELS)
 os.environ["TRANSFORMERS_CACHE"] = str(MODELS)  # legacy name, still read by older code
+
+# The D: volume cannot create symlinks: os.symlink raises WinError 1 ("Incorrect
+# function"), which aborts a download *after* the weights have transferred. Tell
+# huggingface_hub to copy instead. Note this is a different variable from
+# HF_HUB_DISABLE_SYMLINKS_WARNING, which only silences the message and does not
+# change the behaviour.
+os.environ["HF_HUB_DISABLE_SYMLINKS"] = "1"
+os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"

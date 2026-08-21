@@ -90,6 +90,11 @@ model, tok = models.load("gpt2")     # passes cache_dir explicitly as well
   pulled. "gemma3:1b" is not a provenance record; `google/gemma-3-1b-it` at a
   pinned revision is.
 - Set `HF_TOKEN` in `.env` for gated repos and higher rate limits.
+- **The D: volume cannot create symlinks.** `research/__init__.py` sets
+  `HF_HUB_DISABLE_SYMLINKS=1` so downloads copy instead. Without it a large
+  download fails at the *final* file with `OSError: [WinError 1]`, after all the
+  bytes have already transferred. `HF_HUB_DISABLE_SYMLINKS_WARNING` is a
+  different variable and only hides the message.
 
 ## Writing PyTorch code
 - **There is no GPU.** Never write `.cuda()`, `.to("cuda")`, or

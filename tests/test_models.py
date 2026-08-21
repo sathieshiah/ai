@@ -303,3 +303,14 @@ def test_results_dir_can_skip_creation(tmp_path, monkeypatch):
     monkeypatch.setattr(paths, "RESULTS", tmp_path / "results")
     d = paths.results_dir("gpt2", create=False)
     assert not d.exists()
+
+
+def test_symlinks_are_disabled_for_the_hub_cache():
+    """D: cannot create symlinks; os.symlink raises WinError 1 there.
+
+    huggingface_hub creates a symlink per file *after* downloading it, so
+    leaving this unset aborts a 16 GB download at the final small file. Note
+    HF_HUB_DISABLE_SYMLINKS_WARNING is a different variable that only silences
+    the message - it does not change the behaviour.
+    """
+    assert os.environ["HF_HUB_DISABLE_SYMLINKS"] == "1"
