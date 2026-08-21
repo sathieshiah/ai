@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import contextlib
 import json
+import re
 from collections.abc import Iterator, Sequence
 from pathlib import Path
 
@@ -237,3 +238,52 @@ def ollama_blob(model_tag: str) -> Path:
             digest = layer["digest"].replace(":", "-")
             return root / "blobs" / digest
     raise LookupError(f"no model layer in manifest for {model_tag!r}")
+
+
+def blocks(model) -> list[tuple[str, torch.nn.Module]]:
+    """The repeated transformer blocks, whatever this architecture calls them.
+
+    Naming is not portable: GPT-2 uses ``transformer.h``, Llama/Gemma/Qwen use
+    ``model.layers``, GPT-NeoX uses ``gpt_neox.layers``, OPT uses
+    ``model.decoder.layers``. Rather than hard-coding any of those, this finds
+    the longest ``ModuleList`` whose entries all share one class - which is what
+    a stack of identical decoder blocks looks like structurally.
+
+    Use this instead of writing a literal module path, so switching models
+    stays a one-line change of model id.
+    """
+    best: list[tuple[str, torch.nn.Module]] = []
+
+    for name, module in model.named_modules():
+        if not isinstance(module, torch.nn.ModuleList) or len(module) < 2:
+            continue
+        if len({type(child) for child in module}) != 1:
+            continue
+        if len(module) > len(best):
+            best = [(f"{name}.{i}", child) for i, child in enumerate(module)]
+
+    if not best:
+        raise LookupError(
+            "could not find a stack of transformer blocks; inspect "
+            "layer_table(model) and address the modules directly"
+        )
+    return best
+
+
+def block_names(model) -> list[str]:
+    """Dotted names of the transformer blocks, in depth order."""
+    return [name for name, _ in blocks(model)]
+
+
+def find(model, pattern: str) -> list[tuple[str, torch.nn.Module]]:
+    """Submodules whose dotted name matches a regex.
+
+    Portable way to reach a role that every architecture gives a different
+    name, e.g. ``find(model, "q_proj|c_attn")`` for the query projection.
+    """
+    regex = re.compile(pattern)
+    return [
+        (name, module)
+        for name, module in model.named_modules()
+        if name and regex.search(name)
+    ]

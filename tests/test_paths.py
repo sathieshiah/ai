@@ -11,10 +11,14 @@ def test_data_dirs_are_under_root():
 
 
 def test_ensure_dirs_is_idempotent(tmp_path, monkeypatch):
-    monkeypatch.setattr(paths, "INTERIM", tmp_path / "interim")
-    monkeypatch.setattr(paths, "PROCESSED", tmp_path / "processed")
-    monkeypatch.setattr(paths, "OUTPUTS", tmp_path / "outputs")
-    monkeypatch.setattr(paths, "FIGURES", tmp_path / "outputs" / "figures")
+    for name in ("INTERIM", "PROCESSED", "MODELS", "RESULTS"):
+        monkeypatch.setattr(paths, name, tmp_path / name.lower())
     paths.ensure_dirs()
     paths.ensure_dirs()
-    assert (tmp_path / "outputs" / "figures").is_dir()
+    for name in ("interim", "processed", "models", "results"):
+        assert (tmp_path / name).is_dir()
+
+
+def test_results_is_a_sibling_of_data_under_root():
+    assert paths.RESULTS.parent == paths.ROOT
+    assert paths.RESULTS.name == "results"

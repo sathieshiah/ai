@@ -2,10 +2,11 @@
 name = "research"
 version = "0.1.0"
 description = "Research on model weights, layers and activations"
+# 3.13 only: no torch wheel exists for cp314 on Windows ARM64, and the x64
+# 3.13 on PATH runs under emulation. See docs/arm64-python-stack.md.
 requires-python = ">=3.13,<3.14"
-# NOTE: torch is deliberately NOT listed here. PyPI ships no win_arm64 torch
-# wheel; it must come from the PyTorch index. See README "Setup".
 dependencies = [
+    "torch==2.9.1",
     "numpy",
     "pandas",
     "matplotlib",
@@ -26,6 +27,7 @@ dev = [
     "ruff",
     "jupyterlab",
     "ipykernel",
+    "nbformat",
 ]
 
 [build-system]
@@ -34,6 +36,17 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+# PyPI ships no win_arm64 torch wheel; the native build lives on the PyTorch
+# index and stops at 2.9.1. `explicit = true` means this index is used *only*
+# for the packages mapped to it below, so everything else still comes from PyPI.
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -28,9 +28,12 @@ data/interim/*
 data/processed/*
 !data/**/.gitkeep
 
-# Outputs
-outputs/
-figures/
+# Results are tracked - they are the deliverable. Keep them small:
+# figures, tables, JSON. Bulk artefacts do not belong in git.
+results/**/*.safetensors
+results/**/*.bin
+results/**/*.pt
+results/**/*.npz
 *.log
 
 # OS / editor
@@ -41,3 +44,9 @@ Thumbs.db
 
 # Model weights (HF cache)
 models/
+
+# uv scratch dirs (this machine only)
+.tmp/
+.uv-cache/
+.venv313/
+.venv-uv/

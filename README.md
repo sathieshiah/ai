@@ -12,10 +12,10 @@ src/research/     importable package
 notebooks/        exploratory notebooks
 scripts/          runnable entry points
 models/           HF weight cache (gitignored, large)
+results/<model>/  every output, split per model
 data/raw|interim|processed/    gitignored contents, tracked shape
 tests/            pytest suite
 docs/             findings and methodology
-outputs/          generated figures (gitignored)
 ```
 
 ## Setup
@@ -34,6 +34,25 @@ py -3.13-arm64 -m venv .venv
 ```bash
 .venv/Scripts/python -m pip install -e ".[dev]"
 ```
+
+## Where results go
+
+Every output lands in `results/`, in a subfolder named for the model, so results
+are never mixed between models:
+
+```python
+MODEL_ID = "gpt2"
+OUT = paths.results_dir(MODEL_ID)        # results/gpt2/  (created for you)
+fig.savefig(OUT / "residual-norm-by-depth.png", dpi=150)
+```
+
+The id is slugged, so `google/gemma-3-1b-it` becomes `results/google_gemma-3-1b-it/`
+and `gemma3:1b` becomes `results/gemma3_1b/`. Always derive the folder from
+`MODEL_ID` rather than typing it — that is what stops a model switch from
+overwriting another model's results.
+
+Results are tracked in git (they are the deliverable); tensors and checkpoints
+under `results/` are gitignored.
 
 ## Working in Jupyter
 

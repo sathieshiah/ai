@@ -110,6 +110,60 @@ model, tok = models.load("gpt2")     # passes cache_dir explicitly as well
 - **Seed anything stochastic** (`torch.manual_seed`) and record the seed in the
   result, or the finding is not reproducible.
 
+## Code must be model-agnostic
+**Switching models is a text change, never a code change.** Every notebook and
+script declares the model once, at the top, and nothing downstream hard-codes
+anything about it:
+
+```python
+MODEL_ID = "gpt2"          # <- the only line that changes
+model, tok = models.load(MODEL_ID)
+```
+
+Module naming is *not* portable between architectures — GPT-2 uses
+`transformer.h.N`, Llama/Gemma/Qwen use `model.layers.N`, GPT-NeoX uses
+`gpt_neox.layers.N`, OPT uses `model.decoder.layers.N`. So:
+
+- **Never write a literal module path.** `"transformer.h.0"` silently breaks the
+  moment `MODEL_ID` changes. Use `models.block_names(model)`, which discovers
+  the block stack structurally, or `models.find(model, "q_proj|c_attn")` to
+  reach a role by regex across naming conventions.
+- **Never hard-code a layer count, hidden size, vocab size, or head count.**
+  Read them off `model.config` or derive them: `len(models.block_names(model))`,
+  not `12`.
+- **Never assume a chat template, BOS/EOS convention, or that a tokenizer has a
+  pad token.** Ask the tokenizer.
+- **Never assume the model fits.** Check the parameter count against the memory
+  budget before loading — see "Memory budget" below.
+- Architecture-specific handling, when genuinely unavoidable, is isolated in
+  `src/research/models.py` behind a generic function — never spread through a
+  notebook.
+
+The test for this: changing `MODEL_ID` to a different family should either work,
+or fail with a clear error. It must never silently analyse the wrong tensors.
+
+## Results go to results/<model>/
+**Every output is written under `results/`, in a per-model subfolder.** Never to
+the project root, never to `notebooks/`, never to a bare `outputs/`.
+
+```python
+OUT = paths.results_dir(MODEL_ID)      # results/gpt2/ - created for you
+fig.savefig(OUT / "attn-scale-by-depth.png", dpi=150)
+table.to_csv(OUT / "layer-table.csv", index=False)
+```
+
+`results_dir()` slugs the model id, so `google/gemma-3-1b-it` becomes
+`results/google_gemma-3-1b-it/` and `gemma3:1b` becomes `results/gemma3_1b/`.
+
+- **Always derive the folder from `MODEL_ID`**, never type the folder name.
+  Hard-coding it means changing models silently overwrites another model's
+  results with the wrong data - the exact failure the per-model split prevents.
+- **Name files for what they contain**, not the notebook that made them:
+  `residual-norm-by-depth.png`, not `plot1.png`.
+- **Results are tracked in git** - they are the deliverable. Keep them small
+  (figures, tables, JSON); tensors and checkpoints are gitignored.
+- A figure in `results/` still needs its finding written up in `docs/`.
+
 ## Platform constraints — read before adding a dependency
 This machine is **Snapdragon X / Windows ARM64, 16 GB unified RAM, CPU only**.
 Two rules follow, and both have already bitten:

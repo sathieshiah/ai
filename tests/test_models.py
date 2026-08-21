@@ -5,7 +5,7 @@ import pytest
 import torch
 from torch import nn
 
-from research import models
+from research import models, paths
 
 
 class Tiny(nn.Module):
@@ -203,3 +203,101 @@ def test_pin_overrides_an_ambient_env_var():
         capture_output=True, text=True, env=env, check=True,
     )
     assert out.stdout.strip() == str(MODELS)
+
+
+# --- architecture-agnostic discovery ---------------------------------------
+
+
+class Block(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.attn = nn.Linear(8, 8)
+        self.mlp = nn.Linear(8, 8)
+
+    def forward(self, x):
+        return self.mlp(self.attn(x))
+
+
+class GPT2Style(nn.Module):
+    """Blocks under transformer.h, as GPT-2 names them."""
+
+    def __init__(self, n=4):
+        super().__init__()
+        self.transformer = nn.Module()
+        self.transformer.h = nn.ModuleList(Block() for _ in range(n))
+        self.transformer.ln_f = nn.LayerNorm(8)
+
+
+class LlamaStyle(nn.Module):
+    """Blocks under model.layers, as Llama/Gemma/Qwen name them."""
+
+    def __init__(self, n=6):
+        super().__init__()
+        self.model = nn.Module()
+        self.model.layers = nn.ModuleList(Block() for _ in range(n))
+        self.model.norm = nn.LayerNorm(8)
+
+
+def test_blocks_found_under_gpt2_naming():
+    assert models.block_names(GPT2Style(4)) == [f"transformer.h.{i}" for i in range(4)]
+
+
+def test_blocks_found_under_llama_naming():
+    """The same code must work across families - that is the whole point."""
+    assert models.block_names(LlamaStyle(6)) == [f"model.layers.{i}" for i in range(6)]
+
+
+def test_block_count_matches_the_stack():
+    assert len(models.blocks(LlamaStyle(6))) == 6
+
+
+def test_blocks_raises_when_there_is_no_stack(tiny):
+    with pytest.raises(LookupError):
+        models.blocks(tiny)
+
+
+def test_find_matches_across_naming_conventions():
+    pattern = "attn|c_attn"
+    assert len(models.find(GPT2Style(4), pattern)) == 4
+    assert len(models.find(LlamaStyle(6), pattern)) == 6
+
+
+def test_find_returns_nothing_for_a_non_match():
+    assert models.find(GPT2Style(2), "definitely_not_a_module") == []
+
+
+# --- results land in results/<model>/ ---------------------------------------
+
+
+def test_model_slug_handles_org_prefixed_ids():
+    assert paths.model_slug("google/gemma-3-1b-it") == "google_gemma-3-1b-it"
+
+
+def test_model_slug_handles_ollama_tags():
+    assert paths.model_slug("gemma3:1b") == "gemma3_1b"
+
+
+def test_model_slug_leaves_a_plain_id_alone():
+    assert paths.model_slug("gpt2") == "gpt2"
+
+
+def test_model_slug_rejects_an_empty_id():
+    with pytest.raises(ValueError):
+        paths.model_slug("///")
+
+
+def test_results_dir_is_under_results_and_named_for_the_model():
+    d = paths.results_dir("google/gemma-3-1b-it")
+    assert d.parent == paths.RESULTS
+    assert d.name == "google_gemma-3-1b-it"
+    assert d.is_dir()
+
+
+def test_results_dir_separates_models():
+    assert paths.results_dir("gpt2") != paths.results_dir("distilgpt2")
+
+
+def test_results_dir_can_skip_creation(tmp_path, monkeypatch):
+    monkeypatch.setattr(paths, "RESULTS", tmp_path / "results")
+    d = paths.results_dir("gpt2", create=False)
+    assert not d.exists()
