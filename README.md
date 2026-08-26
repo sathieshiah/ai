@@ -66,6 +66,13 @@ is what `beam_trace.csv` and `token-level-probabilities.csv` hold.
 It walks a registry of models in order — download, load to GPU, search, save
 under `results/<model-slug>/`, free VRAM, **delete the weights**, next model.
 
+**The search runs without a KV cache**, and that is deliberate. Four of the seven
+models are hybrid SSM/attention architectures whose recurrent state cannot be
+permuted when beam search re-parents its hypotheses, so a cache would apply to
+three models out of seven — a confound rather than an optimisation. The cost is
+O(n²) in generated length: at 100 tokens, roughly 40× the work of 10 rather than
+10×. See [docs/beam-search-without-a-kv-cache.md](docs/beam-search-without-a-kv-cache.md).
+
 ### Running it
 
 Upload the notebook to Colab, set *Runtime > Change runtime type > A100*, and run
@@ -92,6 +99,9 @@ top to bottom.
   disconnect costs only the model in flight.
 - **No repo is needed on Colab and none is gated.** All seven repos load with
   `trust_remote_code` off; the notebook depends on nothing in this repository.
+- **Budget for the runtime.** With no cache the search is quadratic in generated
+  length, so 100 tokens per model across seven models is the dominant cost after
+  the downloads. The sweep is resumable, so a disconnect is survivable.
 
 ## Self-sufficiency
 
@@ -148,6 +158,8 @@ Snapdragon X, Windows ARM64, 16 GB unified RAM, **CPU only**.
 
 ## Docs
 
+- [docs/beam-search-without-a-kv-cache.md](docs/beam-search-without-a-kv-cache.md)
+  — why the search has no KV cache, and which architectures cannot support one
 - [docs/candidate-models-7b-2026.md](docs/candidate-models-7b-2026.md) — how the
   model shortlist was chosen
 - [docs/weight-layout-comparison.md](docs/weight-layout-comparison.md) — weight
