@@ -1,0 +1,22 @@
+{
+  "model": "LiquidAI/LFM2.5-8B-A1B",
+  "family": "short-conv LIV + GQA, sparse MoE (~1.5B active)",
+  "prompt": "Write a funny story about a teddy bear in about 100 tokens.",
+  "dtype": "torch.bfloat16",
+  "device": "cuda",
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "seed": 0,
+  "config": {
+    "num_tokens_to_generate": 100,
+    "beam_width": 10,
+    "num_return_sequences": 4,
+    "top_k_per_beam": 10,
+    "temperature": 1.0,
+    "early_stopping": true,
+    "record_trace": true,
+    "device": null
+  },
+  "download_s": 54.3,
+  "load_s": 7.6,
+  "search_s": 6.8
+}

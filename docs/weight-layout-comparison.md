@@ -1,7 +1,10 @@
 # How the four shortlisted models actually lay out their weights
 
-Measured 2026-08-21 by `scripts/compare_architectures.py`, which reads
-safetensors headers directly from the Hub. **Nothing was downloaded** — the
+Measured 2026-08-21 by `scripts/compare_architectures.py`, which read
+safetensors headers directly from the Hub. **That script has since been deleted**
+in the cleanup that reduced this repo to the Colab notebook, so the manifests
+below are no longer re-derivable from this repository; they are kept as the
+record of the measurement. **Nothing was downloaded** — the
 header carries every tensor name, shape and dtype, so a full pull of all four
 (~60 GB) would have bought nothing this analysis needed.
 

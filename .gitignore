@@ -45,8 +45,14 @@ Thumbs.db
 # Model weights (HF cache)
 models/
 
+# Single-slot hot copy of one model, left over from the removed src/research
+# staging helper. Kept ignored so any stale copy stays out of git.
+.model-cache/
+
 # uv scratch dirs (this machine only)
 .tmp/
 .uv-cache/
+# Retired venv. Two files under it are pending deletion and vanish on the next
+# reboot; drop this line once .venv313/ is actually gone. The live venv is
+# .venv/, ignored at the top of this file.
 .venv313/
-.venv-uv/

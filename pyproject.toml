@@ -30,12 +30,11 @@ dev = [
     "nbformat",
 ]
 
-[build-system]
-requires = ["setuptools>=68"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages.find]
-where = ["src"]
+# Not an installable package any more: src/research was removed, and the only
+# code left is the self-sufficient Colab notebook plus the tests that read it.
+# uv therefore installs the dependencies and skips building the project itself.
+[tool.uv]
+package = false
 
 # PyPI ships no win_arm64 torch wheel; the native build lives on the PyTorch
 # index and stops at 2.9.1. `explicit = true` means this index is used *only*
@@ -55,17 +54,17 @@ markers = ["slow: downloads weights or reads large files"]
 
 [tool.ruff]
 line-length = 100
-src = ["src", "tests"]
+src = ["tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 
 [tool.ruff.lint.per-file-ignores]
-# F401: `import research` is required for its side effect (it pins HF_HUB_CACHE),
-#       and the template deliberately imports the toolkit before it is used.
-# I001: import order in notebooks is semantically significant - `research` must
-#       come first, so isort's grouping must not reorder it.
-"notebooks/*.ipynb" = ["F401", "I001"]
-# Same reason for scripts: isort would sort `huggingface_hub` above `research`,
-# and the HF cache pin would then arrive after the hub had already read it.
-"scripts/*.py" = ["I001"]
+# F401: cells import for side effects and for readability when lifted out.
+# I001: import order in the notebook is semantically significant - the HF cache
+#       pin must run before huggingface_hub is imported, so isort must not
+#       regroup it.
+# F811: cells tagged `beam-search-implementation` re-import what they need so the
+#       block stands alone if lifted out of the notebook. That re-import is the
+#       point, not an oversight.
+"notebooks/**/*.ipynb" = ["F401", "F811", "I001"]

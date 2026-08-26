@@ -1,0 +1,22 @@
+{
+  "model": "Qwen/Qwen3.5-9B",
+  "family": "Gated DeltaNet 3:1 + gated attention",
+  "prompt": "Write a funny story about a teddy bear in about 100 tokens.",
+  "dtype": "torch.bfloat16",
+  "device": "cuda",
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "seed": 0,
+  "config": {
+    "num_tokens_to_generate": 100,
+    "beam_width": 10,
+    "num_return_sequences": 4,
+    "top_k_per_beam": 10,
+    "temperature": 1.0,
+    "early_stopping": true,
+    "record_trace": true,
+    "device": null
+  },
+  "download_s": 60.3,
+  "load_s": 7.3,
+  "search_s": 22.0
+}

@@ -1,180 +1,160 @@
 # research
 
-Research on model weights, layers, and activations — running locally on a
-Snapdragon X (Windows ARM64) laptop.
+Beam search over recent open-weight language models, run on a Colab GPU.
+
+The deliverable is a finding, not an app. The whole experiment lives in one
+self-sufficient notebook; this repo holds that notebook, the tests that execute
+its code, and the write-ups.
 
 ## Layout
 
 ```
-src/research/     importable package
-  paths.py        canonical project paths
-  models.py       weights / layers / activations access
-notebooks/        exploratory notebooks
-scripts/          runnable entry points
-models/           HF weight cache (gitignored, large)
-results/<model>/  every output, split per model
-data/raw|interim|processed/    gitignored contents, tracked shape
-tests/            pytest suite
-docs/             findings and methodology
+notebooks/cloud/naive-beam-search-colab.ipynb   the experiment
+tests/test_beam.py                              runs the notebook's own cells
+results/<model>/                                every output, split per model
+docs/                                           findings and methodology
+data/raw|interim|processed/                     gitignored contents, tracked shape
+models/                                         HF weight cache (gitignored, large)
 ```
+
+There is no `src/` package. The notebook inlines everything it needs, and the
+tests read the notebook — see **Self-sufficiency** below.
 
 ## Setup
 
-This project runs on **native ARM64 Python 3.13** — not the emulated x64 build.
-`torch` must come from the PyTorch index; PyPI ships no `win_arm64` wheel.
+The local environment exists to run the **tests and the linter**. The experiment
+itself does not run here; it runs on Colab.
+
+This project needs **native ARM64 Python 3.13** — not the emulated x64 build also
+on PATH, and not 3.14 (no `torch` wheel for cp314). PyPI ships no `win_arm64`
+torch wheel either, so `pyproject.toml` routes `torch` to the PyTorch CPU index.
+That mapping is uv-specific: a plain `pip install` would resolve torch from PyPI
+and fail.
 
 ```bash
-py -3.13-arm64 -m venv .venv
+uv sync --extra dev
 ```
 
-```bash
-.venv/Scripts/python -m pip install torch==2.9.1+cpu --index-url https://download.pytorch.org/whl/cpu
-```
+That creates `.venv` and installs the locked versions. The project is **not** an
+installable package (`[tool.uv] package = false`), so nothing is built — there is
+no `research` module to import.
 
-```bash
-.venv/Scripts/python -m pip install -e ".[dev]"
-```
-
-## Where results go
-
-Every output lands in `results/`, in a subfolder named for the model, so results
-are never mixed between models:
-
-```python
-MODEL_ID = "gpt2"
-OUT = paths.results_dir(MODEL_ID)        # results/gpt2/  (created for you)
-fig.savefig(OUT / "residual-norm-by-depth.png", dpi=150)
-```
-
-The id is slugged, so `google/gemma-3-1b-it` becomes `results/google_gemma-3-1b-it/`
-and `gemma3:1b` becomes `results/gemma3_1b/`. Always derive the folder from
-`MODEL_ID` rather than typing it — that is what stops a model switch from
-overwriting another model's results.
-
-Results are tracked in git (they are the deliverable); tensors and checkpoints
-under `results/` are gitignored.
-
-## Working in Jupyter
-
-Coding happens in notebooks. Launch JupyterLab from the project root:
-
-```bash
-.venv/Scripts/python -m jupyterlab
-```
-
-- **Select the `Python (research ARM64)` kernel.** The `python3` kernel on this
-  machine is an emulated x64 interpreter with no PyTorch — it will fail on
-  `import torch`.
-- `notebooks/00-getting-started.ipynb` walks the whole workflow end to end:
-  loading a model, listing layers, reading weights, capturing activations, and
-  inspecting models too large for RAM. Outputs are kept in that one, so it reads
-  as documentation without being run.
-- `notebooks/_template.ipynb` is the starting point for new work.
-- Every notebook opens with `import research` — before `transformers` — so the
-  model cache is pinned to D:.
-
-If the kernel is missing from the launcher, register it:
-
-```bash
-.venv/Scripts/python -m ipykernel install --user --name research --display-name "Python (research ARM64)"
-```
+`uv sync` takes about **7 seconds** on NTFS, because uv hardlinks from its cache
+instead of copying. On the exFAT volume this project used to live on, which
+supports neither symlinks nor hardlinks, the same command took **19 minutes**. If
+it is ever slow again, check the filesystem before anything else.
 
 ## Checks
 
 ```bash
-.venv/Scripts/python -m pytest -m "not slow"
-```
-
-```bash
+.venv/Scripts/python -m pytest        # 46 tests
 .venv/Scripts/python -m ruff check .
 ```
 
-## Where models are downloaded
+The suite is pure CPU and needs no weights: it executes the notebook's beam
+search against a four-token toy model whose every step can be worked out by
+hand, and checks the result against brute force.
 
-All weights land in `models/` at the project root (on D:), never in the default
-cache under your user profile on C:. `research/__init__.py` sets `HF_HUB_CACHE`
-to do this, which means **import `research` before `transformers`**:
+## The experiment
 
-```python
-import research                      # pins the cache - must come first
-from transformers import AutoModelForCausalLM
-model = AutoModelForCausalLM.from_pretrained("gpt2")   # -> D:/research/models
-```
+`notebooks/cloud/naive-beam-search-colab.ipynb` runs a beam search on one
+open-ended comic prompt across **seven architectures**, and compares each result
+against its own greedy baseline. Width 10, 100 tokens, top-10 candidates per
+beam, seed 0. Every selection decision is traced, which is the point: the trace
+is what `beam_trace.csv` and `token-level-probabilities.csv` hold.
 
-Or skip the ordering concern entirely by using the helper:
+It walks a registry of models in order — download, load to GPU, search, save
+under `results/<model-slug>/`, free VRAM, **delete the weights**, next model.
 
-```python
-from research import models
-model, tok = models.load("gpt2")
-```
+### Running it
 
-This is **enforced**, not merely defaulted. Loading a model from anywhere
-else - including the pre-existing HF cache in your user profile on C: -
-raises `ExternalModelError`:
+Upload the notebook to Colab, set *Runtime > Change runtime type > A100*, and run
+top to bottom.
 
-```python
-models.load(profile_cache / 'models--Qwen--Qwen3-0.6B')
-# ExternalModelError: C:/Users/.../models--Qwen--Qwen3-0.6B is outside
-#                     D:/research/models
-```
+| Runtime | VRAM | Models that run | Download |
+|---|---|---|---|
+| T4 | 15 GB | **none** — and no bfloat16, so it falls back to float16 | — |
+| L4 | 22.5 GB | the first five, up to Zaya1-8B | ~75 GiB |
+| A100 | 40 GB | **all seven** | ~127 GiB |
 
-Re-download by repo id instead. `models/` is gitignored; put `HF_TOKEN` in
-`.env` for gated repos such as Gemma.
+- **A T4 runs nothing.** The budget is VRAM minus 2.5 GiB of headroom for
+  activations and the logits tensor, and the smallest model needs 12.9 GiB
+  against a T4's 12.5. A fit check prints the verdict per model *before* anything
+  downloads.
+- **An L4 drops the control.** `Mistral-Nemo-Base-2407` is the plain dense
+  transformer the comparison is measured against; without it the remaining six
+  are much harder to interpret.
+- **~127 GiB of downloads.** Peak disk stays near 31 GiB because each model's
+  weights are deleted after use — that deletion is load-bearing, not
+  housekeeping, and happens even when a download fails part-way.
+- **Results go to Drive**, not to Colab's ephemeral disk. The sweep is resumable:
+  a model whose `summary-row.json` is already on Drive is skipped, so a
+  disconnect costs only the model in flight.
+- **No repo is needed on Colab and none is gated.** All seven repos load with
+  `trust_remote_code` off; the notebook depends on nothing in this repository.
 
-## Accessing weights and layers
+## Self-sufficiency
 
-```python
-from research import models
+The notebook is standalone on purpose. Read it top to bottom and it works: the
+algorithm lives in the notebook, not behind an import. There is no `research`
+package to install on Colab, and `pyproject.toml` pins a **CPU-only** torch index
+that would silently install the wrong build on a GPU box.
 
-model, tok = models.load("gpt2")           # cached under models/
-
-# Every parameterised submodule, with shapes
-for row in models.layer_table(model)[:5]:
-    print(row["name"], row["class"], row["params"], row["shapes"])
-
-# One weight tensor by dotted name
-w = models.weight(model, "transformer.h.0.attn.c_attn.weight")   # (768, 2304)
-
-# Activations, via forward hooks
-import torch
-with models.capture(model, ["transformer.h.0", "transformer.ln_f"]) as acts:
-    with torch.no_grad():
-        model(**tok("The capital of France is", return_tensors="pt"))
-acts["transformer.h.0"].shape        # (1, 5, 768)
-```
-
-Inspect weights **without loading the model** — works on files larger than RAM,
-since nothing is materialised:
+Self-sufficiency normally costs test coverage. It does not here: the cells
+carrying the algorithm are tagged,
 
 ```python
-t = models.raw_tensors("models/models--gpt2/snapshots/<hash>")
-t["h.0.attn.c_attn.weight"]          # ((768, 2304), 'F32', 'model.safetensors')
-one = models.read_tensor(path, "h.0.attn.c_attn.weight")
+# cell metadata: {"tags": ["beam-search-implementation"]}
 ```
 
-Read the quantised GGUF weights Ollama already has on disk, to compare against
-the original safetensors:
+and `tests/test_beam.py` reads those cells out of the `.ipynb`, `exec`s them, and
+tests what the notebook actually runs — not a copy that could drift.
 
-```python
-blob = models.ollama_blob("gemma3:1b")
-models.gguf_tensors(blob)[:3]
-```
+## Results
+
+Every output lands in `results/`, in a subfolder named for the model, so results
+are never mixed between models. The notebook derives that folder from the model
+id rather than typing it, which is what stops a model switch from overwriting
+another model's data.
+
+Results are tracked in git — they are the deliverable. Tensors and checkpoints
+under `results/` are gitignored.
+
+> **The beam-search results currently in `results/` are superseded.** They come
+> from a first run made before the chat template was applied and before the
+> vision-language models were dropped, so instruction-tuned models completed the
+> prompt instead of answering it. They are kept as the evidence for why the
+> notebook is built the way it is. The `tensor-manifest.csv` files are unrelated
+> and still current — they belong to the weight-layout comparison in `docs/`.
 
 ## Known limits on this machine
 
-- **16 GB unified RAM, CPU only.** A model at float32 needs ~4 bytes/param, so
-  the practical ceiling for a full torch load is roughly **1–3 B parameters**.
-  Use `dtype=torch.bfloat16` to halve that when a model would not otherwise fit.
-- **`datasets`, `transformer_lens`, and `nnsight` cannot be installed.** All
-  three require `pyarrow`, which ships no `win_arm64` wheel. `models.capture()`
-  covers the hook-based workflow those libraries wrap.
-- See [docs/arm64-python-stack.md](docs/arm64-python-stack.md) for the full
-  wheel-availability survey, and
-  [docs/local-llm-on-snapdragon-x.md](docs/local-llm-on-snapdragon-x.md) for
-  measured inference throughput.
+Snapdragon X, Windows ARM64, 16 GB unified RAM, **CPU only**.
 
-## Conventions
+- **No local inference at this scale.** Measured on Falcon-H1R-7B at bfloat16, a
+  single batched forward pass took **376 s**, and a warm pass was no faster than
+  a cold one: 14.1 GiB of weights cannot stay cached in ~8 GiB, so every pass
+  re-streams the model off D: at ~38 MB/s. This is why the experiment is on
+  Colab.
+- **`datasets`, `transformer_lens` and `nnsight` cannot be installed.** All three
+  need `pyarrow`, which ships no `win_arm64` wheel at any version.
+- **`models/` is a directory junction onto `D:/research/models`** and still holds
+  weights from earlier work. Nothing in this repo reads it any more — the cache
+  guard was removed with `src/research/`, so a local `from_pretrained` now falls
+  back to the profile cache under `~/.cache/huggingface` unless you set
+  `HF_HUB_CACHE` yourself. Recreate the junction with
+  `mklink /J C:\research\models D:\research\models`; do not delete
+  `D:/research/models`, it is the real folder rather than a copy.
 
-- Anything reused by more than one notebook moves into `src/research/`.
-- Resolve paths via `research.paths`, never with relative strings.
-- Secrets live in `.env` (gitignored); document new keys in `.env.example`.
+## Docs
+
+- [docs/candidate-models-7b-2026.md](docs/candidate-models-7b-2026.md) — how the
+  model shortlist was chosen
+- [docs/weight-layout-comparison.md](docs/weight-layout-comparison.md) — weight
+  layouts across the shortlisted architectures
+- [docs/arm64-python-stack.md](docs/arm64-python-stack.md) — what installs on
+  ARM64 and what does not
+- [docs/local-llm-on-snapdragon-x.md](docs/local-llm-on-snapdragon-x.md) —
+  measured local inference throughput
+
+Secrets live in `.env` (gitignored); document new keys in `.env.example`.
