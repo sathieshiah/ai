@@ -51,8 +51,14 @@ what is being tested and why.
 ## Where the code runs — and it is two places
 This is the single easiest thing to get wrong here.
 
-**The notebook targets a Colab GPU.** It uses CUDA, bfloat16 and a KV cache
-deliberately. Do not strip those out.
+**The notebook targets a Colab GPU.** It uses CUDA and bfloat16 deliberately.
+Do not strip those out.
+
+**The search runs without a KV cache, also deliberately.** It costs O(n^2) in
+generated length, and that is the accepted price: several of the models are
+hybrid SSM/attention architectures whose recurrent state cannot be permuted when
+beam search re-parents its hypotheses, so a cache would work for some models and
+not others. Adding one back would be a confound, not an optimisation.
 
 **The tests run locally on CPU, ARM64, with no GPU at all.** Never add `.cuda()`
 or `device_map="auto"` to a test; there is no device to move to.
