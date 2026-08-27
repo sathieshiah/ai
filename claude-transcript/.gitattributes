@@ -1,0 +1,3 @@
+# These are archived session logs, copied verbatim. Keep them byte-exact:
+# no line-ending translation on checkout, no diffing 14 MB of JSON.
+*.jsonl -text -diff
