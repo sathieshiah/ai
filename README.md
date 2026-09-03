@@ -130,12 +130,21 @@ another model's data.
 Results are tracked in git — they are the deliverable. Tensors and checkpoints
 under `results/` are gitignored.
 
-> **The beam-search results currently in `results/` are superseded.** They come
-> from a first run made before the chat template was applied and before the
-> vision-language models were dropped, so instruction-tuned models completed the
-> prompt instead of answering it. They are kept as the evidence for why the
-> notebook is built the way it is. The `tensor-manifest.csv` files are unrelated
-> and still current — they belong to the weight-layout comparison in `docs/`.
+> **`results/` currently holds no run data.** The first sweep's outputs — beam
+> traces, per-token probabilities, greedy baselines, run metadata and the
+> cross-model summary — have been deleted. They predated the chat-template fix
+> and the removal of the vision-language models, so instruction-tuned models
+> completed the prompt instead of answering it; they remain in git history if
+> that evidence is ever wanted again.
+>
+> What stays is the architectural material, which is still current:
+> `architecture-comparison.csv` and the per-model `tensor-manifest.csv` files
+> behind `docs/weight-layout-comparison.md`, plus `skipped-models.csv` recording
+> why each candidate was dropped.
+>
+> The sweep is therefore **unrun against the current seven-model registry**.
+> Since the notebook resumes on the presence of `summary-row.json`, the next
+> Colab run executes all seven from scratch.
 
 ## Known limits on this machine
 

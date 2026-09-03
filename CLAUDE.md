@@ -113,11 +113,14 @@ the project root, never to `notebooks/`, never to a bare `outputs/`.
   (figures, tables, JSON); tensors and checkpoints are gitignored.
 - A figure in `results/` still needs its finding written up in `docs/`.
 
-The beam-search results currently in `results/` are **superseded** — they predate
-the chat-template fix and the removal of the vision-language models. They are
-kept as evidence for why the notebook is built as it is. Do not read them as
-current findings. The `tensor-manifest.csv` files are a separate, still-valid
-experiment.
+`results/` holds **no beam-search run data**. The first sweep's outputs predated
+the chat-template fix and the removal of the vision-language models, and have
+been deleted; recover them from git history if the evidence is needed. What
+remains is the architectural reasoning behind the registry, and is still valid:
+`architecture-comparison.csv`, the per-model `tensor-manifest.csv` files (a
+separate experiment, written up in `docs/weight-layout-comparison.md`), and
+`skipped-models.csv`. Treat a per-model folder appearing again as output from a
+fresh run, not as history.
 
 ## Data rules
 - `data/raw/` is **immutable**. Never edit or overwrite files there; derive into
