@@ -1,0 +1,642 @@
+<title>The Seven-Model Sweep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --paper:      #f4f7f6;
+    --surface:    #ffffff;
+    --sunk:       #e8eeec;
+    --ink:        #14201e;
+    --muted:      #5b6f6b;
+    --faint:      #8fa39f;
+    --rule:       #d3dedb;
+    --a:          #0f7a68;   /* experiment A - beam search */
+    --a-dim:      #d3ebe5;
+    --b:          #5b53c9;   /* experiment B - weighted embedding */
+    --b-dim:      #e2e0f7;
+    --warn:       #9a5b12;
+    --warn-dim:   #f6e6cf;
+    --shadow:     0 1px 2px rgba(20,32,30,.06), 0 8px 24px -12px rgba(20,32,30,.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0d1614; --surface: #14201e; --sunk: #1b2926;
+      --ink: #e6efec; --muted: #9bb0ab; --faint: #6b807b; --rule: #27403a;
+      --a: #4fd1b8; --a-dim: #17352f;
+      --b: #9d95f5; --b-dim: #23214a;
+      --warn: #e8b57a; --warn-dim: #34281a;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0d1614; --surface: #14201e; --sunk: #1b2926;
+    --ink: #e6efec; --muted: #9bb0ab; --faint: #6b807b; --rule: #27403a;
+    --a: #4fd1b8; --a-dim: #17352f;
+    --b: #9d95f5; --b-dim: #23214a;
+    --warn: #e8b57a; --warn-dim: #34281a;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 16.5px; line-height: 1.65; margin: 0; padding: 0 1.25rem 6rem;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 62rem; margin: 0 auto; }
+  .col  { max-width: 40rem; }
+
+  header.mast { padding: 4.5rem 0 2.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 3rem; }
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace; font-size: .72rem; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--muted); margin: 0 0 1.1rem;
+  }
+  h1 {
+    font-family: Fraunces, Georgia, serif; font-variation-settings: "opsz" 120;
+    font-weight: 600; font-size: clamp(2.2rem, 5.6vw, 3.4rem); line-height: 1.05;
+    letter-spacing: -.02em; margin: 0 0 1.2rem; text-wrap: balance;
+  }
+  .standfirst { font-size: 1.14rem; color: var(--muted); margin: 0; max-width: 37rem; }
+  .standfirst strong { color: var(--ink); font-weight: 600; }
+
+  section { margin: 0 0 4rem; }
+  h2 {
+    font-family: Fraunces, Georgia, serif; font-variation-settings: "opsz" 40;
+    font-weight: 600; font-size: 1.72rem; letter-spacing: -.012em; line-height: 1.2;
+    margin: 0 0 .5rem; display: flex; align-items: baseline; gap: .8rem; text-wrap: balance;
+  }
+  h2 .num {
+    font-family: "JetBrains Mono", monospace; font-size: .78rem; font-weight: 500;
+    color: var(--muted); background: var(--sunk); border-radius: 3px;
+    padding: .2em .5em; letter-spacing: .04em; flex: none; position: relative; top: -.15em;
+  }
+  h2 .num.a { color: var(--a); background: var(--a-dim); }
+  h2 .num.b { color: var(--b); background: var(--b-dim); }
+  h3 {
+    font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--faint); margin: 2.4rem 0 .7rem;
+  }
+  p { margin: 0 0 1.05rem; }
+  .lede { color: var(--muted); margin-bottom: 1.8rem; }
+  code {
+    font-family: "JetBrains Mono", monospace; font-size: .855em; background: var(--sunk);
+    padding: .12em .38em; border-radius: 3px; word-break: break-word;
+  }
+
+  figure {
+    margin: 2.2rem 0; background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 7px; padding: 1.6rem 1.5rem 1.2rem; box-shadow: var(--shadow);
+    overflow-x: auto;
+  }
+  figure svg { display: block; width: 100%; min-width: 500px; max-width: 100%; height: auto; }
+  figcaption {
+    margin-top: 1.1rem; padding-top: .9rem; border-top: 1px solid var(--rule);
+    font-size: .875rem; color: var(--muted); line-height: 1.55;
+  }
+  figcaption b { color: var(--ink); font-weight: 600; }
+
+  .s-box   { fill: var(--sunk); stroke: var(--rule); stroke-width: 1.5; }
+  .s-a     { fill: var(--a-dim); stroke: var(--a); stroke-width: 1.5; }
+  .s-b     { fill: var(--b-dim); stroke: var(--b); stroke-width: 1.5; }
+  .s-warn  { fill: var(--warn-dim); stroke: var(--warn); stroke-width: 1.5; }
+  .s-label { fill: var(--ink); font-family: "Public Sans", sans-serif; font-size: 13px; font-weight: 500; }
+  .s-sub   { fill: var(--muted); font-family: "JetBrains Mono", monospace; font-size: 10.5px; }
+  .s-edge  { fill: var(--muted); font-family: "JetBrains Mono", monospace; font-size: 10px; }
+  .s-ac    { fill: var(--a); font-family: "JetBrains Mono", monospace; font-size: 10.5px; }
+  .s-bc    { fill: var(--b); font-family: "JetBrains Mono", monospace; font-size: 10.5px; }
+  .s-line  { stroke: var(--faint); stroke-width: 1.5; fill: none; }
+  .s-hair  { stroke: var(--rule); stroke-width: 1; fill: none; }
+
+  .tbl-wrap { overflow-x: auto; margin: 1.6rem 0; border: 1px solid var(--rule); border-radius: 7px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: .89rem; min-width: 34rem; }
+  th {
+    text-align: left; font-size: .7rem; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--faint); font-weight: 600; padding: .8rem 1rem;
+    border-bottom: 1px solid var(--rule); white-space: nowrap;
+  }
+  td { padding: .68rem 1rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.n { font-family: "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--muted); }
+  .pill {
+    display: inline-block; font-family: "JetBrains Mono", monospace; font-size: .68rem;
+    padding: .16em .45em; border-radius: 3px; white-space: nowrap;
+    background: var(--sunk); color: var(--muted);
+  }
+  .pill.a { background: var(--a-dim); color: var(--a); }
+  .pill.b { background: var(--b-dim); color: var(--b); }
+  .pill.w { background: var(--warn-dim); color: var(--warn); }
+
+  .note {
+    border-left: 2px solid var(--faint); padding: .15rem 0 .15rem 1.15rem;
+    margin: 1.8rem 0; color: var(--muted); font-size: .95rem;
+  }
+  .note b { color: var(--ink); font-weight: 600; }
+  .note.a { border-left-color: var(--a); }
+  .note.b { border-left-color: var(--b); }
+  .note.w { border-left-color: var(--warn); }
+
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1.5rem; margin: 1.8rem 0; }
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: 7px; padding: 1.2rem 1.3rem; }
+  .card h4 {
+    margin: 0 0 .2rem; font-family: Fraunces, Georgia, serif; font-size: 1.15rem;
+    font-weight: 600; font-variation-settings: "opsz" 30;
+  }
+  .card .who { font-family: "JetBrains Mono", monospace; font-size: .7rem; margin: 0 0 .8rem; }
+  .card.a .who { color: var(--a); }
+  .card.b .who { color: var(--b); }
+  .card p { font-size: .92rem; margin: 0 0 .6rem; color: var(--muted); }
+  .card ul { margin: .5rem 0 0; padding-left: 1.1rem; font-size: .88rem; color: var(--muted); }
+  .card li { margin-bottom: .3rem; }
+
+  footer { border-top: 1px solid var(--rule); padding-top: 1.6rem; color: var(--faint); font-size: .84rem; }
+  footer code { background: none; color: var(--muted); }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">notebooks / cloud / two experiments</p>
+  <h1>The Seven-Model Sweep</h1>
+  <p class="standfirst">Two decoding experiments over the same seven architectures, the same prompt and the same harness. One <strong>picks a token</strong> every step. The other <strong>never picks at all</strong>. Everything else is held identical so the difference belongs to the decoder.</p>
+</header>
+
+<div class="col">
+<section>
+  <h2><span class="num">TL;DR</span> Same harness, different decoder</h2>
+  <p class="lede">Both notebooks walk a registry of seven models: download, load to GPU, decode, write results to Drive, free the GPU, delete the weights, next. That machinery is not merely similar between them — eight cells are byte-for-byte identical, 18,518 characters reused verbatim.</p>
+  <p>They diverge at exactly one place: section 4, the algorithm. Everything before it is setup, everything after it is bookkeeping.</p>
+</section>
+</div>
+
+<div class="two">
+  <div class="card a">
+    <h4>Naive beam search</h4>
+    <p class="who">naive-beam-search-colab.ipynb · 33 cells</p>
+    <p>Keeps 10 hypotheses alive, scores every candidate from every beam on one axis, compares them globally, and re-parents. Commits to a real token every step.</p>
+    <ul>
+      <li>Returns 4 ranked sequences</li>
+      <li>Greedy width-1 run as baseline</li>
+      <li>Can stop early once every beam hits EOS</li>
+    </ul>
+  </div>
+  <div class="card b">
+    <h4>Weighted-embedding feedback</h4>
+    <p class="who">weighted-embedding-feedback-colab.ipynb · 28 cells</p>
+    <p>Feeds back the probability-weighted average of every embedding row. Nothing is ever chosen, so there is no branching and no text — only a trajectory.</p>
+    <ul>
+      <li>61 configurations per model, one batch</li>
+      <li>Greedy is row 61, not a separate run</li>
+      <li>Never stops early — EOS is recorded, ignored</li>
+    </ul>
+  </div>
+</div>
+
+<figure>
+<svg viewBox="0 0 880 420" role="img" aria-label="Both notebooks share sections 0 to 2 verbatim, diverge at sections 3 and 4 where the algorithm lives, and rejoin with the same per-model run, sweep, results and export structure.">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--faint)"/>
+    </marker>
+  </defs>
+
+  <text class="s-sub" x="0" y="14">shared, byte for byte</text>
+  <rect class="s-box" x="0" y="24" width="260" height="150" rx="5"/>
+  <text class="s-label" x="16" y="48">§0  Runtime · Drive</text>
+  <text class="s-sub"   x="16" y="66">CUDA, bfloat16, mount, EXPERIMENT</text>
+  <line class="s-hair" x1="16" y1="80" x2="244" y2="80"/>
+  <text class="s-label" x="16" y="102">§1  Infrastructure, inlined</text>
+  <text class="s-sub"   x="16" y="120">blocks() · download() · load() · free_gpu()</text>
+  <line class="s-hair" x1="16" y1="134" x2="244" y2="134"/>
+  <text class="s-label" x="16" y="156">§2  The seven models</text>
+
+  <text class="s-sub" x="16" y="192">18,518 chars · 8 cells · identical in both</text>
+
+  <!-- split -->
+  <path class="s-line" d="M 260 70 L 300 70 L 300 40 L 340 40" marker-end="url(#ar)"/>
+  <path class="s-line" d="M 260 70 L 300 70 L 300 200 L 340 200" marker-end="url(#ar)"/>
+
+  <!-- branch A -->
+  <rect class="s-a" x="340" y="14" width="250" height="128" rx="5"/>
+  <text class="s-label" x="356" y="38">§3  width 10 · top-k 10 · 100 tokens</text>
+  <text class="s-label" x="356" y="62">§4  beam_search()</text>
+  <text class="s-ac"    x="356" y="80">3 cells tagged</text>
+  <text class="s-sub"   x="356" y="98">beam-search-implementation</text>
+  <text class="s-ac"    x="356" y="122">picks one token per step</text>
+
+  <!-- branch B -->
+  <rect class="s-b" x="340" y="174" width="250" height="128" rx="5"/>
+  <text class="s-label" x="356" y="198">§3  61 rows · 5 temps · 3 histories</text>
+  <text class="s-label" x="356" y="222">§4  weighted_embedding_decode()</text>
+  <text class="s-bc"    x="356" y="240">3 cells tagged</text>
+  <text class="s-sub"   x="356" y="258">weighted-embedding-implementation</text>
+  <text class="s-bc"    x="356" y="282">picks nothing, ever</text>
+
+  <!-- rejoin -->
+  <path class="s-line" d="M 590 78 L 630 78 L 630 158 L 670 158" marker-end="url(#ar)"/>
+  <path class="s-line" d="M 590 238 L 630 238 L 630 158 L 670 158"/>
+
+  <rect class="s-box" x="670" y="60" width="200" height="196" rx="5"/>
+  <text class="s-label" x="686" y="84">§5  run_one()</text>
+  <text class="s-sub"   x="686" y="102">save before free</text>
+  <line class="s-hair" x1="686" y1="116" x2="854" y2="116"/>
+  <text class="s-label" x="686" y="138">§6  the sweep</text>
+  <text class="s-sub"   x="686" y="156">resumable · failures logged</text>
+  <line class="s-hair" x1="686" y1="170" x2="854" y2="170"/>
+  <text class="s-label" x="686" y="192">§7  results</text>
+  <line class="s-hair" x1="686" y1="206" x2="854" y2="206"/>
+  <text class="s-label" x="686" y="228">§8  export · zip</text>
+  <text class="s-sub"   x="686" y="246">same shape, different files</text>
+
+  <!-- tests rail -->
+  <line class="s-hair" x1="340" y1="330" x2="880" y2="330"/>
+  <text class="s-sub" x="340" y="352">the tagged cells are what the tests execute</text>
+  <rect class="s-a" x="340" y="364" width="250" height="40" rx="4"/>
+  <text class="s-sub" x="356" y="380">tests/test_beam.py</text>
+  <text class="s-ac"  x="356" y="396">43 tests</text>
+  <rect class="s-b" x="612" y="364" width="258" height="40" rx="4"/>
+  <text class="s-sub" x="628" y="380">tests/test_weighted_embedding.py</text>
+  <text class="s-bc"  x="628" y="396">39 tests</text>
+</svg>
+<figcaption><b>The tests read the notebooks, not a copy.</b> Each algorithm lives in three tagged cells, and the suites <code>exec</code> those cells straight out of the <code>.ipynb</code> — so the code under test is the code that runs on Colab, and a copy cannot drift. That is what lets both notebooks stay self-sufficient without losing coverage.</figcaption>
+</figure>
+
+<div class="col">
+<section>
+  <h2><span class="num">CORE</span> The one substitution</h2>
+  <p class="lede">Strip away the instrumentation and the two experiments differ by a single line — what gets appended to the context each step.</p>
+</section>
+</div>
+
+<figure>
+<svg viewBox="0 0 880 400" role="img" aria-label="Beam search takes the top candidates from every beam, compares them globally and re-parents, appending one chosen token's embedding. Weighted-embedding feedback appends the probability-weighted average of the whole embedding table and never chooses.">
+  <defs>
+    <marker id="ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--a)"/>
+    </marker>
+    <marker id="arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--b)"/>
+    </marker>
+    <marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--faint)"/>
+    </marker>
+  </defs>
+
+  <!-- LEFT: beam -->
+  <text class="s-label" x="0" y="16">Beam search — commits</text>
+  <line x1="0" y1="26" x2="400" y2="26" stroke="var(--a)" stroke-width="2"/>
+
+  <rect class="s-a" x="0" y="44" width="112" height="30" rx="4"/>
+  <text class="s-sub" x="12" y="64">beam A  −2.10</text>
+  <rect class="s-a" x="132" y="44" width="112" height="30" rx="4"/>
+  <text class="s-sub" x="144" y="64">beam B  −2.44</text>
+  <rect class="s-a" x="264" y="44" width="112" height="30" rx="4"/>
+  <text class="s-sub" x="276" y="64">beam C  −3.05</text>
+
+  <line class="s-line" x1="56" y1="74" x2="56" y2="96" marker-end="url(#arg)"/>
+  <line class="s-line" x1="188" y1="74" x2="188" y2="96" marker-end="url(#arg)"/>
+  <line class="s-line" x1="320" y1="74" x2="320" y2="96" marker-end="url(#arg)"/>
+
+  <rect class="s-box" x="0" y="96" width="376" height="30" rx="4"/>
+  <text class="s-sub" x="12" y="116">top-10 candidates from each → 100 scored on one axis</text>
+
+  <line class="s-line" x1="188" y1="126" x2="188" y2="150" marker-end="url(#arg)"/>
+
+  <rect class="s-box" x="0" y="150" width="376" height="30" rx="4"/>
+  <text class="s-sub" x="12" y="170">global top-10 · a strong beam may take two slots</text>
+
+  <path stroke="var(--a)" stroke-width="2" fill="none" d="M 40 180 C 40 214, 40 214, 40 232" marker-end="url(#ara)"/>
+  <path stroke="var(--a)" stroke-width="2" fill="none" d="M 150 180 C 150 214, 172 214, 172 232" marker-end="url(#ara)"/>
+  <path stroke="var(--a)" stroke-width="2" fill="none" d="M 90 180 C 90 214, 304 214, 304 232" marker-end="url(#ara)"/>
+
+  <rect class="s-a" x="0" y="232" width="96" height="28" rx="4"/>
+  <text class="s-sub" x="10" y="251">A + " The"</text>
+  <rect class="s-a" x="124" y="232" width="96" height="28" rx="4"/>
+  <text class="s-sub" x="134" y="251">B + " There"</text>
+  <rect class="s-a" x="256" y="232" width="96" height="28" rx="4"/>
+  <text class="s-sub" x="266" y="251">A + " Once"</text>
+
+  <text class="s-edge" x="0" y="284" fill="var(--warn)">beam C proposed nothing good enough — pruned</text>
+
+  <rect class="s-a" x="0" y="306" width="376" height="46" rx="4"/>
+  <text class="s-label" x="12" y="326">append E[chosen]</text>
+  <text class="s-ac"    x="12" y="344">one real token's embedding</text>
+
+  <!-- divider -->
+  <line class="s-hair" x1="440" y1="0" x2="440" y2="390"/>
+
+  <!-- RIGHT: weighted -->
+  <text class="s-label" x="490" y="16">Weighted embedding — never commits</text>
+  <line x1="490" y1="26" x2="880" y2="26" stroke="var(--b)" stroke-width="2"/>
+
+  <rect class="s-b" x="490" y="44" width="376" height="30" rx="4"/>
+  <text class="s-sub" x="502" y="64">one trajectory — nothing to branch on</text>
+
+  <line class="s-line" x1="678" y1="74" x2="678" y2="96" marker-end="url(#arg)"/>
+
+  <rect class="s-box" x="490" y="96" width="376" height="30" rx="4"/>
+  <text class="s-sub" x="502" y="116">p over the whole vocabulary  (or the top 5)</text>
+
+  <line class="s-line" x1="678" y1="126" x2="678" y2="150" marker-end="url(#arg)"/>
+
+  <rect class="s-b" x="490" y="150" width="376" height="46" rx="4"/>
+  <text class="s-label" x="502" y="170">e = Σ p(v) · E[v]</text>
+  <text class="s-bc"    x="502" y="188">(rows, vocab) @ (vocab, hidden)</text>
+
+  <line class="s-line" x1="678" y1="196" x2="678" y2="220" marker-end="url(#arg)"/>
+
+  <rect class="s-box" x="490" y="220" width="180" height="40" rx="4"/>
+  <text class="s-sub" x="502" y="238">raw</text>
+  <text class="s-sub" x="502" y="254">shorter than any token</text>
+  <rect class="s-box" x="686" y="220" width="180" height="40" rx="4"/>
+  <text class="s-sub" x="698" y="238">rescaled</text>
+  <text class="s-sub" x="698" y="254">to mean embedding norm</text>
+
+  <text class="s-edge" x="490" y="284" fill="var(--b)">no argmax, no sample, no token — the readout is recorded only</text>
+
+  <rect class="s-b" x="490" y="306" width="376" height="46" rx="4"/>
+  <text class="s-label" x="502" y="326">append e</text>
+  <text class="s-bc"    x="502" y="344">a point no token occupies</text>
+</svg>
+<figcaption><b>Left commits, right does not — and that single difference removes the search.</b> Beam search needs a choice to branch on; the mixed vector is a deterministic function of the prefix, so ten hypotheses sharing a prefix would receive identical input and stay identical forever. Dropping the beam is a consequence of the substitution, not a simplification of it.</figcaption>
+</figure>
+
+
+<div class="col">
+<section>
+  <h2><span class="num b">TRAP</span> The scale nobody tells you about</h2>
+  <p class="lede">Feeding embeddings instead of token ids is not a neutral swap. It is a second code path through the model, and architectures do not agree on what happens along it &mdash; silently, with no error either way.</p>
+  <p>Three placements of the same multiplier exist in <code>transformers</code>, and two of them need <em>opposite</em> handling from the same config key.</p>
+</section>
+</div>
+
+<figure>
+<svg viewBox="0 0 860 300" role="img" aria-label="Three conventions for where an embedding multiplier is applied. Plain models apply none. FalconH1 applies it only on the token-id path, so feeding embeddings needs the multiplier applied by hand. GraniteMoeHybrid applies it after the branch so both paths get it and no correction is needed.">
+  <defs>
+    <marker id="arc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--faint)"/>
+    </marker>
+  </defs>
+
+  <text class="s-sub" x="150" y="16">feeding token ids</text>
+  <text class="s-sub" x="430" y="16">feeding embeddings</text>
+  <text class="s-sub" x="712" y="16">correction needed</text>
+  <line class="s-hair" x1="0" y1="26" x2="860" y2="26"/>
+
+  <text class="s-label" x="0" y="62">plain</text>
+  <text class="s-sub"   x="0" y="78">Qwen3 &middot; Mistral &middot; DeepSeek</text>
+  <rect class="s-box" x="150" y="44" width="52" height="28" rx="4"/><text class="s-sub" x="168" y="63">E</text>
+  <line class="s-line" x1="202" y1="58" x2="240" y2="58" marker-end="url(#arc)"/>
+  <rect class="s-box" x="240" y="44" width="70" height="28" rx="4"/><text class="s-sub" x="256" y="63">model</text>
+  <line class="s-line" x1="430" y1="58" x2="500" y2="58" marker-end="url(#arc)"/>
+  <rect class="s-box" x="500" y="44" width="70" height="28" rx="4"/><text class="s-sub" x="516" y="63">model</text>
+  <rect class="s-box" x="712" y="44" width="60" height="28" rx="4"/><text class="s-sub" x="732" y="63">&times;1</text>
+
+  <line class="s-hair" x1="0" y1="92" x2="860" y2="92"/>
+
+  <text class="s-label" x="0" y="128">ids-only</text>
+  <text class="s-sub"   x="0" y="144">Falcon-H1R-7B</text>
+  <rect class="s-box" x="150" y="110" width="52" height="28" rx="4"/><text class="s-sub" x="168" y="129">E</text>
+  <line class="s-line" x1="202" y1="124" x2="228" y2="124" marker-end="url(#arc)"/>
+  <rect class="s-warn" x="228" y="110" width="60" height="28" rx="4"/><text class="s-sub" x="238" y="129" fill="var(--warn)">&times;5.66</text>
+  <line class="s-line" x1="288" y1="124" x2="312" y2="124" marker-end="url(#arc)"/>
+  <rect class="s-box" x="312" y="110" width="70" height="28" rx="4"/><text class="s-sub" x="328" y="129">model</text>
+  <line class="s-line" x1="430" y1="124" x2="500" y2="124" marker-end="url(#arc)"/>
+  <text class="s-edge" x="436" y="114" fill="var(--warn)">nothing applied</text>
+  <rect class="s-box" x="500" y="110" width="70" height="28" rx="4"/><text class="s-sub" x="516" y="129">model</text>
+  <rect class="s-warn" x="712" y="110" width="60" height="28" rx="4"/><text class="s-sub" x="722" y="129" fill="var(--warn)">&times;5.66</text>
+
+  <line class="s-hair" x1="0" y1="158" x2="860" y2="158"/>
+
+  <text class="s-label" x="0" y="194">always</text>
+  <text class="s-sub"   x="0" y="210">granite-4.0-h-tiny</text>
+  <rect class="s-box" x="150" y="176" width="52" height="28" rx="4"/><text class="s-sub" x="168" y="195">E</text>
+  <line class="s-line" x1="202" y1="190" x2="228" y2="190" marker-end="url(#arc)"/>
+  <rect class="s-b" x="228" y="176" width="56" height="28" rx="4"/><text class="s-sub" x="242" y="195" fill="var(--b)">&times;12</text>
+  <line class="s-line" x1="284" y1="190" x2="312" y2="190" marker-end="url(#arc)"/>
+  <rect class="s-box" x="312" y="176" width="70" height="28" rx="4"/><text class="s-sub" x="328" y="195">model</text>
+  <line class="s-line" x1="430" y1="190" x2="452" y2="190" marker-end="url(#arc)"/>
+  <rect class="s-b" x="452" y="176" width="56" height="28" rx="4"/><text class="s-sub" x="466" y="195" fill="var(--b)">&times;12</text>
+  <line class="s-line" x1="508" y1="190" x2="532" y2="190" marker-end="url(#arc)"/>
+  <rect class="s-box" x="532" y="176" width="70" height="28" rx="4"/><text class="s-sub" x="548" y="195">model</text>
+  <rect class="s-box" x="712" y="176" width="60" height="28" rx="4"/><text class="s-sub" x="732" y="195">&times;1</text>
+
+  <line class="s-hair" x1="0" y1="224" x2="860" y2="224"/>
+  <text class="s-sub" x="0" y="250">Falcon and Granite read the SAME config key, embedding_multiplier, and need opposite handling.</text>
+  <text class="s-sub" x="0" y="270">A rule that fixes one breaks the other by 12x. Neither raises. Both write plausible-looking CSVs.</text>
+  <text class="s-bc"  x="0" y="290">So the notebook measures the factor instead: run the prompt both ways, keep the scalar that reconciles them.</text>
+</svg>
+<figcaption><b>The calibration asks the model rather than encoding a convention.</b> Candidates come from the model's own config &mdash; <code>embedding_multiplier</code>, <code>embed_scale</code>, <code>sqrt(hidden_size)</code>, and <code>1.0</code> first &mdash; and each is accepted only if the two paths' logits agree within 2%. A candidate's <em>name</em> earns it nothing: Granite's 12 is correctly rejected on that test. If none reconciles, the run raises rather than decoding at the wrong input scale.</figcaption>
+</figure>
+
+<div class="col">
+  <p class="note w"><b>What this would have cost.</b> Falcon-H1R-7B would have run with every fed vector 5.66&times; too small &mdash; no error, no warning, just a quietly degraded trajectory for one of the two hybrid SSM models the experiment exists to compare. The beam notebook is unaffected: it passes <code>input_ids</code> throughout and never leaves the path the models were trained on.</p>
+</div>
+
+<div class="col">
+<section>
+  <h2><span class="num b">§4</span> Where the mixtures go</h2>
+  <p class="lede">Once nothing is committed, a second question appears that ordinary decoding never has to ask: what does the model see behind the current position? Three answers, run as a full axis.</p>
+</section>
+</div>
+
+<figure>
+<svg viewBox="0 0 820 300" role="img" aria-label="Three history modes shown as context strips at step five: soft keeps every mixture, committed replaces each passed position with its argmax token leaving one mixture, and last-only keeps a single position and discards even the prompt.">
+  <text class="s-sub" x="0" y="14">the context at step 5, for a 3-token prompt</text>
+
+  <!-- legend -->
+  <rect class="s-box" x="470" y="4" width="16" height="14" rx="2"/>
+  <text class="s-sub" x="492" y="15">real token</text>
+  <rect class="s-b"   x="580" y="4" width="16" height="14" rx="2"/>
+  <text class="s-sub" x="602" y="15">mixture</text>
+
+  <!-- soft -->
+  <text class="s-label" x="0" y="56">soft</text>
+  <text class="s-sub"   x="0" y="72">keep everything</text>
+  <g>
+    <rect class="s-box" x="160" y="38" width="52" height="34" rx="4"/><text class="s-sub" x="178" y="60">P₁</text>
+    <rect class="s-box" x="218" y="38" width="52" height="34" rx="4"/><text class="s-sub" x="236" y="60">P₂</text>
+    <rect class="s-box" x="276" y="38" width="52" height="34" rx="4"/><text class="s-sub" x="294" y="60">P₃</text>
+    <rect class="s-b" x="340" y="38" width="52" height="34" rx="4"/><text class="s-sub" x="360" y="60">e₁</text>
+    <rect class="s-b" x="398" y="38" width="52" height="34" rx="4"/><text class="s-sub" x="418" y="60">e₂</text>
+    <rect class="s-b" x="456" y="38" width="52" height="34" rx="4"/><text class="s-sub" x="476" y="60">e₃</text>
+    <rect class="s-b" x="514" y="38" width="52" height="34" rx="4"/><text class="s-sub" x="534" y="60">e₄</text>
+  </g>
+  <text class="s-edge" x="586" y="60" fill="var(--b)">drift compounds</text>
+
+  <!-- committed -->
+  <text class="s-label" x="0" y="136">committed</text>
+  <text class="s-sub"   x="0" y="152">commit once passed</text>
+  <g>
+    <rect class="s-box" x="160" y="118" width="52" height="34" rx="4"/><text class="s-sub" x="178" y="140">P₁</text>
+    <rect class="s-box" x="218" y="118" width="52" height="34" rx="4"/><text class="s-sub" x="236" y="140">P₂</text>
+    <rect class="s-box" x="276" y="118" width="52" height="34" rx="4"/><text class="s-sub" x="294" y="140">P₃</text>
+    <rect class="s-box" x="340" y="118" width="52" height="34" rx="4"/><text class="s-sub" x="356" y="140">t₁</text>
+    <rect class="s-box" x="398" y="118" width="52" height="34" rx="4"/><text class="s-sub" x="414" y="140">t₂</text>
+    <rect class="s-box" x="456" y="118" width="52" height="34" rx="4"/><text class="s-sub" x="472" y="140">t₃</text>
+    <rect class="s-b" x="514" y="118" width="52" height="34" rx="4"/><text class="s-sub" x="534" y="140">e₄</text>
+  </g>
+  <text class="s-edge" x="586" y="140" fill="var(--b)">exactly one mixture</text>
+
+  <!-- last-only -->
+  <text class="s-label" x="0" y="216">last-only</text>
+  <text class="s-sub"   x="0" y="232">keep only the newest</text>
+  <g>
+    <rect class="s-b" x="514" y="198" width="52" height="34" rx="4"/><text class="s-sub" x="534" y="220">e₄</text>
+  </g>
+  <text class="s-edge" x="586" y="220" fill="var(--b)">the prompt is gone too</text>
+  <line class="s-hair" x1="160" y1="215" x2="500" y2="215" stroke-dasharray="4 4"/>
+  <text class="s-edge" x="256" y="208" fill="var(--warn)">discarded entirely</text>
+
+  <line class="s-hair" x1="0" y1="262" x2="820" y2="262"/>
+  <text class="s-sub" x="0" y="284">soft + committed grow in lockstep and share one batch · last-only is one position wide, so it runs as its own forward pass</text>
+</svg>
+<figcaption><b>The third mode cannot share a batch, so it gets its own forward pass.</b> A batch has one sequence length, and a <code>last-only</code> row is one position wide while the others keep growing. The cheaper alternative — keep one tensor and mask everything but the last position — was rejected: masking is an attention concept, and on the three hybrid SSM models a masked position still runs through the recurrence, which is not the same as not being there. The extra pass is one position wide and costs almost nothing.</figcaption>
+</figure>
+
+
+<div class="col">
+<section>
+  <h2><span class="num b">WHY</span> The mixture is short, and predictably so</h2>
+  <p class="lede">A convex combination of vectors pointing in different directions is shorter than any of them. In high dimensions the cross terms cancel and the shortfall follows a law &mdash; which is what makes the magnitude axis a real question rather than a hunch.</p>
+  <p>For mass spread over <code>k</code> effective tokens, the mixture's norm falls as <code>1/&radic;k</code> of a single token's. Simulated at <code>d=4096</code>, the law holds to three digits.</p>
+</section>
+</div>
+
+<figure>
+<svg viewBox="0 0 760 310" role="img" aria-label="Mixture norm as a fraction of a single token embedding norm against the number of tokens the probability mass is spread over, on a log scale. It falls from 0.99 at one token to 0.007 across a full vocabulary.">
+  <line class="s-hair" x1="60" y1="50" x2="700" y2="50"/>
+  <line class="s-hair" x1="60" y1="100" x2="700" y2="100"/>
+  <line class="s-hair" x1="60" y1="150" x2="700" y2="150"/>
+  <line class="s-hair" x1="60" y1="200" x2="700" y2="200"/>
+  <line class="s-hair" x1="60" y1="250" x2="700" y2="250" stroke="var(--faint)"/>
+
+  <text class="s-sub" x="22" y="54">1.0</text>
+  <text class="s-sub" x="16" y="104">0.75</text>
+  <text class="s-sub" x="22" y="154">0.5</text>
+  <text class="s-sub" x="16" y="204">0.25</text>
+  <text class="s-sub" x="34" y="254">0</text>
+
+  <rect x="60" y="244" width="640" height="6" fill="var(--warn)" opacity="0.18"/>
+  <line x1="60" y1="244" x2="700" y2="244" stroke="var(--warn)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text class="s-edge" x="300" y="238" fill="var(--warn)">below ~0.03x, RMSNorm's epsilon dominates its own denominator</text>
+
+  <polyline points="60,51.4 105,108.4 164,161 254,206 358,230 506,244 700,249"
+            stroke="var(--b)" stroke-width="2" fill="none"/>
+
+  <g fill="var(--b)">
+    <circle cx="60"  cy="51.4" r="5"><title>1 token - 0.993x a token embedding</title></circle>
+    <circle cx="105" cy="108.4" r="5"><title>2 tokens - 0.708x</title></circle>
+    <circle cx="164" cy="161"  r="5"><title>5 tokens - 0.445x</title></circle>
+    <circle cx="254" cy="206"  r="5"><title>20 tokens - 0.222x</title></circle>
+    <circle cx="358" cy="230"  r="5"><title>100 tokens - 0.099x</title></circle>
+    <circle cx="506" cy="244"  r="5"><title>1000 tokens - 0.032x</title></circle>
+    <circle cx="700" cy="249"  r="5"><title>full vocabulary - 0.007x</title></circle>
+  </g>
+
+  <text class="s-bc" x="70"  y="44">0.99</text>
+  <text class="s-bc" x="174" y="156">0.45</text>
+  <text class="s-bc" x="368" y="224">0.10</text>
+  <text class="s-bc" x="648" y="268">0.007</text>
+
+  <text class="s-sub" x="56"  y="284">1</text>
+  <text class="s-sub" x="160" y="284">5</text>
+  <text class="s-sub" x="346" y="284">100</text>
+  <text class="s-sub" x="496" y="284">1k</text>
+  <text class="s-sub" x="682" y="284">20k</text>
+  <text class="s-sub" x="60"  y="304">tokens the probability mass is spread over&nbsp;&nbsp;(log scale)</text>
+  <text class="s-sub" x="60"  y="20">mixture norm as a fraction of one token's norm</text>
+</svg>
+<figcaption><b>Temperature and magnitude are not independent axes.</b> At T=0.25 the distribution is peaked, the mixture is nearly a real token, and rescaling changes almost nothing. At T=4 over the full vocabulary it is one to two orders of magnitude short &mdash; short enough that RMSNorm stops rescuing it: <code>x / sqrt(mean(x&sup2;) + &epsilon;)</code> with <code>mean(x&sup2;)</code> around 1e-8 against an <code>&epsilon;</code> of 1e-5 or 1e-6 in all seven models means the epsilon dominates and the vector stays tiny. Running raw and rescaled separates a representational failure from a numerical one.</figcaption>
+</figure>
+
+<div class="col">
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Distribution</th><th>Effective support</th><th>Mixture norm</th></tr></thead>
+    <tbody>
+      <tr><td class="n">p = [.9, .05, .03, .02]</td><td class="n">1.2</td><td class="n">0.90&times;</td></tr>
+      <tr><td class="n">p = [.5, .25, .15, .10]</td><td class="n">2.9</td><td class="n">0.59&times;</td></tr>
+      <tr><td class="n">p = [.3, .3, .2, .2]</td><td class="n">3.8</td><td class="n">0.51&times;</td></tr>
+      <tr><td class="n">flat over 1000</td><td class="n">1000</td><td class="n">0.03&times;</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Effective support is <code>1/&Sigma;p&sup2;</code>. The effect compounds hardest on <code>last-only</code> rows, where the single short vector is the entire input with no other positions to carry signal &mdash; making <code>T4-full-raw-last-only</code> the corner where temperature, tail mass, magnitude and history all push the same way.</p>
+</div>
+
+<div class="col">
+<section>
+  <h3>the 61 rows, per model</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Axis</th><th>Values</th><th>×</th><th>Asks</th></tr></thead>
+    <tbody>
+      <tr><td>temperature</td><td class="n">0.25 · 0.5 · 1 · 2 · 4</td><td class="n">5</td><td>how peaked is the mixture</td></tr>
+      <tr><td>mixture</td><td class="n">full · top-5</td><td class="n">2</td><td>does the vocabulary tail matter</td></tr>
+      <tr><td>magnitude</td><td class="n">raw · rescaled</td><td class="n">2</td><td>wrong direction, or wrong size</td></tr>
+      <tr><td>history</td><td class="n">soft · committed · last-only</td><td class="n">3</td><td>does drift compound</td></tr>
+      <tr><td><b>soft rows</b></td><td></td><td class="n"><b>60</b></td><td>plus greedy as row 61</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note b"><b>Greedy is a configuration, not a separate run.</b> Its "mixture" is one-hot on the argmax — which is both ordinary hard decoding and the exact limit the soft rows approach as temperature goes to zero. Putting it in the batch means it shares the prompt and the step index with everything it is compared against, so divergence is a per-step comparison between rows rather than between runs.</p>
+</section>
+
+<section>
+  <h2><span class="num">BOTH</span> What is held identical</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th></th><th>Beam search</th><th>Weighted embedding</th></tr></thead>
+    <tbody>
+      <tr><td>Prompt</td><td colspan="2"><code>"Write a funny story about a teddy bear."</code> — byte for byte</td></tr>
+      <tr><td>Models</td><td colspan="2">the same seven, 6.94 B – 15.71 B, 12.9 – 29.3 GiB bf16</td></tr>
+      <tr><td>Budget</td><td colspan="2" class="n">100 generated tokens, enforced by the loop</td></tr>
+      <tr><td>Seed</td><td colspan="2" class="n">0, recorded in every run-metadata.json</td></tr>
+      <tr><td>KV cache</td><td colspan="2">none — O(n²), so hybrid SSM models are treated identically</td></tr>
+      <tr><td>Runtime</td><td colspan="2">A100 40 GB, bfloat16, weights deleted between models</td></tr>
+      <tr><td>Early stop</td><td><span class="pill a">yes, on EOS</span></td><td><span class="pill b">never</span></td></tr>
+      <tr><td>Output</td><td>4 ranked sequences + greedy</td><td>61 trajectories, no committed text</td></tr>
+      <tr><td>Drive folder</td><td class="n">naive-beam-search-colab/</td><td class="n">weighted-embedding-feedback-colab/</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Both derive the Drive folder from their own filename rather than a typed constant, so a second experiment lands beside the first instead of on top of it.</p>
+</section>
+
+<section>
+  <h2><span class="num">OUT</span> What each writes</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>File</th><th>From</th><th>One row per</th></tr></thead>
+    <tbody>
+      <tr><td class="n">final_results.csv</td><td><span class="pill a">beam</span></td><td>returned sequence (4)</td></tr>
+      <tr><td class="n">beam_trace.csv</td><td><span class="pill a">beam</span></td><td>candidate at every step</td></tr>
+      <tr><td class="n">token-level-probabilities.csv</td><td><span class="pill a">beam</span></td><td>token of a returned sequence</td></tr>
+      <tr><td class="n">greedy_baseline.csv</td><td><span class="pill a">beam</span></td><td>token of the width-1 run</td></tr>
+      <tr><td class="n">per-step-diagnostics.csv</td><td><span class="pill b">weighted</span></td><td>config × step — entropy, norms, cosine</td></tr>
+      <tr><td class="n">top-token-probabilities.csv</td><td><span class="pill b">weighted</span></td><td>config × step × rank (top 10)</td></tr>
+      <tr><td class="n">argmax-readouts.csv</td><td><span class="pill b">weighted</span></td><td>config — its text and divergence step</td></tr>
+      <tr><td class="n">run-metadata.json</td><td>both</td><td>the reproduction record</td></tr>
+      <tr><td class="n">summary-row.json</td><td>both</td><td>cross-model row, and the resume marker</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Every file lands in <code>results/&lt;model-slug&gt;/</code>, with the folder derived from the model id rather than typed — which is what stops a model switch from overwriting another model's data. The sweep resumes on the presence of <code>summary-row.json</code>.</p>
+</section>
+
+<section>
+  <h2><span class="num w">NOW</span> Current state</h2>
+  <p><strong>Neither experiment has data.</strong> Both notebooks are code-complete — 82 tests green, ruff clean, outputs cleared, A100 metadata set — and <code>results/</code> holds only the architectural evidence: <code>architecture-comparison.csv</code>, four <code>tensor-manifest.csv</code> files, and <code>skipped-models.csv</code>.</p>
+  <p class="note w"><b>The beam sweep must be re-run before the comparison means anything.</b> It has run before, but with a prompt that ended "in about 100 tokens" — wording that sent two models into deliberating about whether tokens meant words, and which is now removed from both notebooks. Those results were deleted rather than kept as a misleading baseline. Re-running is ~127 GiB of downloads and roughly an hour.</p>
+</section>
+
+<footer>
+  <p>Drawn from <code>naive-beam-search-colab.ipynb</code> (33 cells) and <code>weighted-embedding-feedback-colab.ipynb</code> (28 cells) as they stand in the working tree — three tagged implementation cells each, executed directly by <code>tests/test_beam.py</code> and <code>tests/test_weighted_embedding.py</code>.</p>
+</footer>
+</div>
+
+</div>
