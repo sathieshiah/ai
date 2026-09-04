@@ -171,6 +171,9 @@ Full survey: `docs/arm64-python-stack.md`.
 `README.md` (layout, setup, how to run the sweep) ·
 `notebooks/cloud/naive-beam-search-colab.ipynb` (the experiment) ·
 `tests/test_beam.py` (executes the notebook's own tagged cells) ·
+`notebooks/cloud/weighted-embedding-feedback-colab.ipynb` (the second experiment) ·
+`tests/test_weighted_embedding.py` (executes its tagged cells) ·
+`docs/notebook-flow.html` (visual walkthrough of both notebooks) ·
 `docs/beam-search-without-a-kv-cache.md` (why there is no KV cache) ·
 `docs/candidate-models-7b-2026.md` (how the shortlist was chosen) ·
 `docs/weight-layout-comparison.md` (weight layouts across architectures) ·

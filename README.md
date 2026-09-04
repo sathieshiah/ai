@@ -167,6 +167,10 @@ Snapdragon X, Windows ARM64, 16 GB unified RAM, **CPU only**.
 
 ## Docs
 
+- [docs/notebook-flow.html](docs/notebook-flow.html) — a visual walkthrough of
+  both notebooks: the shared harness, the substitution that separates them, the
+  three history modes, and the embedding-scale calibration. Open it in a
+  browser; it is a standalone page with no assets
 - [docs/beam-search-without-a-kv-cache.md](docs/beam-search-without-a-kv-cache.md)
   — why the search has no KV cache, and which architectures cannot support one
 - [docs/candidate-models-7b-2026.md](docs/candidate-models-7b-2026.md) — how the
